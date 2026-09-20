@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Music Gallery</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem 2rem;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            color: var(--accent-color);
+            letter-spacing: 0.05em;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        /* 曲名目次（サイドバー） */
+        .sidebar {
+            width: 280px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .track-nav {
+            list-style: none;
+        }
+
+        .track-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .track-nav li button {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .track-nav li button:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+        }
+
+        .track-nav li button.active {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            font-weight: bold;
+        }
+
+        /* コンテンツ表示エリア */
+        .content-area {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .track-panel {
+            display: none;
+        }
+
+        .track-panel.active {
+            display: block;
+        }
+
+        .track-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        /* プレイヤーエリア */
+        .player-container {
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        audio, video {
+            width: 100%;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* 歌詞セクション */
+        .lyrics-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .lyrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .lyrics-box {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            white-space: pre-wrap; /* 改行をそのまま反映 */
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .lyrics-box h4 {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* レスポンシブ対応（画面幅が狭い場合） */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+            .lyrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎵 My AI Music Gallery</h1>
+    </header>
+
+    <div class="main-container">
+        <!-- 目次（サイドバー） -->
+        <aside class="sidebar">
+            <h2>曲目リスト</h2>
+            <ul class="track-nav">
+                <li><button class="nav-btn active" onclick="switchTrack('track1', event)">1. Midnight Cyber City</button></li>
+                <li><button class="nav-btn" onclick="switchTrack('track2', event)">2. Starlight Echoes</button></li>
+                <li><button class="nav-btn" onclick="switchTrack('track3', event)">3. Digital Horizons (Video)</button></li>
+            </ul>
+        </aside>
+
+        <!-- メインウィンドウ -->
+        <main class="content-area">
+            
+            <!-- 曲1 (音声例) -->
+            <article id="track1" class="track-panel active">
+                <h2 class="track-title">Midnight Cyber City</h2>
+                
+                <div class="player-container">
+                    <!-- audioタグ: src属性に音声ファイルのパスを指定 -->
+                    <audio controls src="media/track1.mp3">
+                        お使いのブラウザは audio 要素に対応していません。
+                    </audio>
+                </div>
+
+                <div class="lyrics-section">
+                    <h3>Lyrics & Translation</h3>
+                    <div class="lyrics-grid">
+                        <div class="lyrics-box">
+                            <h4>English</h4>
+Neon lights in the midnight rain,
+Walking through the digital lane.
+Future calls my name,
+Nothing ever feels the same.
+                        </div>
+                        <div class="lyrics-box">
+                            <h4>日本語訳</h4>
+真夜中の雨に輝くネオンの光
+デジタルな路地を歩き抜ける
+未来が僕の名を呼んでいる
+何ひとつ、同じままのものは無い
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 曲2 (音声例) -->
+            <article id="track2" class="track-panel">
+                <h2 class="track-title">Starlight Echoes</h2>
+                
+                <div class="player-container">
+                    <audio controls src="media/track2.mp3">
+                        お使いのブラウザは audio 要素に対応していません。
+                    </audio>
+                </div>
+
+                <div class="lyrics-section">
+                    <h3>Lyrics & Translation</h3>
+                    <div class="lyrics-grid">
+                        <div class="lyrics-box">
+                            <h4>English</h4>
+Lost in the silent space,
+Searching for a gentle place.
+Echoes of a distant star,
+Guiding us to where we are.
+                        </div>
+                        <div class="lyrics-box">
+                            <h4>日本語訳</h4>
+静寂の宇宙（そら）に迷い込み
+穏やかな場所を探している
+遠い星の残響が
+僕たちの居場所を指し示している
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 曲3 (動画例) -->
+            <article id="track3" class="track-panel">
+                <h2 class="track-title">Digital Horizons</h2>
+                
+                <div class="player-container">
+                    <!-- videoタグ: 動画（MP4など）を表示・再生する場合 -->
+                    <video controls src="media/track3.mp4">
+                        お使いのブラウザは video 要素に対応していません。
+                    </video>
+                </div>
+
+                <div class="lyrics-section">
+                    <h3>Lyrics & Translation</h3>
+                    <div class="lyrics-grid">
+                        <div class="lyrics-box">
+                            <h4>English</h4>
+Beyond the code and key,
+A brand new world for you and me.
+                        </div>
+                        <div class="lyrics-box">
+                            <h4>日本語訳</h4>
+コードとキーのその先へ
+僕とあなたのための新しい世界
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <script>
+        function switchTrack(trackId, event) {
+            // 全てのトラックパネルを非表示にする
+            const panels = document.querySelectorAll('.track-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            // 全てのナビボタンのアクティブ状態を解除する
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // 再生中のすべての音声・動画を停止する
+            const mediaElements = document.querySelectorAll('audio, video');
+            mediaElements.forEach(media => media.pause());
+
+            // 該当するトラックパネルを表示
+            const targetPanel = document.getElementById(trackId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+
+            // クリックされたボタンをアクティブにする
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
