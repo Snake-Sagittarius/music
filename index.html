@@ -53,7 +53,7 @@
             gap: 1.5rem;
         }
 
-        /* 曲名目次（サイドバー） */
+        /* サイドバー（目次） */
         .sidebar {
             width: 280px;
             background-color: var(--card-bg);
@@ -103,7 +103,7 @@
             font-weight: bold;
         }
 
-        /* コンテンツ表示エリア */
+        /* メインコンテンツ表示領域 */
         .content-area {
             flex: 1;
             background-color: var(--card-bg);
@@ -161,7 +161,7 @@
             padding: 1.25rem;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            white-space: pre-wrap; /* 改行をそのまま反映 */
+            white-space: pre-wrap;
             font-size: 0.95rem;
             line-height: 1.8;
         }
@@ -174,7 +174,12 @@
             letter-spacing: 0.05em;
         }
 
-        /* レスポンシブ対応（画面幅が狭い場合） */
+        .loading, .error {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -198,132 +203,167 @@
         <!-- 目次（サイドバー） -->
         <aside class="sidebar">
             <h2>曲目リスト</h2>
-            <ul class="track-nav">
-                <li><button class="nav-btn active" onclick="switchTrack('track1', event)">1. Midnight Cyber City</button></li>
-                <li><button class="nav-btn" onclick="switchTrack('track2', event)">2. Starlight Echoes</button></li>
-                <li><button class="nav-btn" onclick="switchTrack('track3', event)">3. Digital Horizons (Video)</button></li>
+            <ul id="track-nav-list" class="track-nav">
+                <!-- JavaScriptで自動生成されます -->
             </ul>
         </aside>
 
         <!-- メインウィンドウ -->
-        <main class="content-area">
-            
-            <!-- 曲1 (音声例) -->
-            <article id="track1" class="track-panel active">
-                <h2 class="track-title">Midnight Cyber City</h2>
-                
-                <div class="player-container">
-                    <!-- audioタグ: src属性に音声ファイルのパスを指定 -->
-                    <audio controls src="media/track1.mp3">
-                        お使いのブラウザは audio 要素に対応していません。
-                    </audio>
-                </div>
-
-                <div class="lyrics-section">
-                    <h3>Lyrics & Translation</h3>
-                    <div class="lyrics-grid">
-                        <div class="lyrics-box">
-                            <h4>English</h4>
-Neon lights in the midnight rain,
-Walking through the digital lane.
-Future calls my name,
-Nothing ever feels the same.
-                        </div>
-                        <div class="lyrics-box">
-                            <h4>日本語訳</h4>
-真夜中の雨に輝くネオンの光
-デジタルな路地を歩き抜ける
-未来が僕の名を呼んでいる
-何ひとつ、同じままのものは無い
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- 曲2 (音声例) -->
-            <article id="track2" class="track-panel">
-                <h2 class="track-title">Starlight Echoes</h2>
-                
-                <div class="player-container">
-                    <audio controls src="media/track2.mp3">
-                        お使いのブラウザは audio 要素に対応していません。
-                    </audio>
-                </div>
-
-                <div class="lyrics-section">
-                    <h3>Lyrics & Translation</h3>
-                    <div class="lyrics-grid">
-                        <div class="lyrics-box">
-                            <h4>English</h4>
-Lost in the silent space,
-Searching for a gentle place.
-Echoes of a distant star,
-Guiding us to where we are.
-                        </div>
-                        <div class="lyrics-box">
-                            <h4>日本語訳</h4>
-静寂の宇宙（そら）に迷い込み
-穏やかな場所を探している
-遠い星の残響が
-僕たちの居場所を指し示している
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- 曲3 (動画例) -->
-            <article id="track3" class="track-panel">
-                <h2 class="track-title">Digital Horizons</h2>
-                
-                <div class="player-container">
-                    <!-- videoタグ: 動画（MP4など）を表示・再生する場合 -->
-                    <video controls src="media/track3.mp4">
-                        お使いのブラウザは video 要素に対応していません。
-                    </video>
-                </div>
-
-                <div class="lyrics-section">
-                    <h3>Lyrics & Translation</h3>
-                    <div class="lyrics-grid">
-                        <div class="lyrics-box">
-                            <h4>English</h4>
-Beyond the code and key,
-A brand new world for you and me.
-                        </div>
-                        <div class="lyrics-box">
-                            <h4>日本語訳</h4>
-コードとキーのその先へ
-僕とあなたのための新しい世界
-                        </div>
-                    </div>
-                </div>
-            </article>
-
+        <main id="content-area" class="content-area">
+            <div id="loading" class="loading">楽曲データを読み込み中...</div>
         </main>
     </div>
 
     <script>
-        function switchTrack(trackId, event) {
-            // 全てのトラックパネルを非表示にする
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSongsMarkdown('songs.md');
+        });
+
+        // マークダウンの読み込みと解析
+        async function loadSongsMarkdown(filePath) {
+            const contentArea = document.getElementById('content-area');
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                const mdText = await response.text();
+                const songs = parseSongsMarkdown(mdText);
+
+                if (songs.length === 0) {
+                    contentArea.innerHTML = '<div class="error">曲データが見つかりませんでした。</div>';
+                    return;
+                }
+
+                renderGallery(songs);
+            } catch (err) {
+                console.error(err);
+                contentArea.innerHTML = `<div class="error">データの読み込みに失敗しました (${err.message})</div>`;
+            }
+        }
+
+        // 簡易マークダウンパーサー
+        function parseSongsMarkdown(mdText) {
+            // "---" で各曲ブロックに分割
+            const rawBlocks = mdText.split(/^---$/m);
+            const songs = [];
+
+            rawBlocks.forEach(block => {
+                const trimmed = block.trim();
+                if (!trimmed) return;
+
+                // 曲タイトル (# タイトル)
+                const titleMatch = trimmed.match(/^#\s+(.+)$/m);
+                const title = titleMatch ? titleMatch[1].trim() : 'Untitled';
+
+                // メディアファイルパス (- File: xxx)
+                const fileMatch = trimmed.match(/^[-*]?\s*File:\s*(.+)$/mi);
+                const file = fileMatch ? fileMatch[1].trim() : '';
+
+                // 英語・日本語歌詞の抽出 (## English / ## Japanese)
+                let english = '';
+                let japanese = '';
+
+                const sections = trimmed.split(/^##\s+/m);
+                sections.forEach(sec => {
+                    const lines = sec.trim().split('\n');
+                    const header = lines[0].toLowerCase().trim();
+                    const body = lines.slice(1).join('\n').trim();
+
+                    if (header.includes('english') || header.includes('英語')) {
+                        english = body;
+                    } else if (header.includes('japanese') || header.includes('日本語') || header.includes('訳')) {
+                        japanese = body;
+                    }
+                });
+
+                songs.push({ title, file, english, japanese });
+            });
+
+            return songs;
+        }
+
+        // HTML要素の動的生成
+        function renderGallery(songs) {
+            const navList = document.getElementById('track-nav-list');
+            const contentArea = document.getElementById('content-area');
+
+            navList.innerHTML = '';
+            contentArea.innerHTML = '';
+
+            songs.forEach((song, index) => {
+                // ナビゲーションボタン生成
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <button class="nav-btn ${index === 0 ? 'active' : ''}" onclick="switchTrack(${index}, event)">
+                        ${index + 1}. ${escapeHtml(song.title)}
+                    </button>
+                `;
+                navList.appendChild(li);
+
+                // メディアタイプの自動判定（動画か音声か）
+                const ext = song.file.split('.').pop().toLowerCase();
+                const isVideo = ['mp4', 'webm', 'ogv', 'mov'].includes(ext);
+                const mediaTag = isVideo
+                    ? `<video controls src="${escapeHtml(song.file)}"></video>`
+                    : `<audio controls src="${escapeHtml(song.file)}"></audio>`;
+
+                // コンテンツパネル生成
+                const article = document.createElement('article');
+                article.id = `track-${index}`;
+                article.className = `track-panel ${index === 0 ? 'active' : ''}`;
+                article.innerHTML = `
+                    <h2 class="track-title">${escapeHtml(song.title)}</h2>
+                    
+                    <div class="player-container">
+                        ${mediaTag}
+                    </div>
+
+                    <div class="lyrics-section">
+                        <h3>Lyrics & Translation</h3>
+                        <div class="lyrics-grid">
+                            <div class="lyrics-box">
+                                <h4>English</h4>
+${escapeHtml(song.english)}
+                            </div>
+                            <div class="lyrics-box">
+                                <h4>日本語訳</h4>
+${escapeHtml(song.japanese)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                contentArea.appendChild(article);
+            });
+        }
+
+        // タブ切り替え処理
+        function switchTrack(index, event) {
+            // パネル切り替え
             const panels = document.querySelectorAll('.track-panel');
-            panels.forEach(panel => panel.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+            const targetPanel = document.getElementById(`track-${index}`);
+            if (targetPanel) targetPanel.classList.add('active');
 
-            // 全てのナビボタンのアクティブ状態を解除する
+            // ボタン表示切り替え
             const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(button => button.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
 
-            // 再生中のすべての音声・動画を停止する
+            // 再生中の音声を停止
             const mediaElements = document.querySelectorAll('audio, video');
             mediaElements.forEach(media => media.pause());
+        }
 
-            // 該当するトラックパネルを表示
-            const targetPanel = document.getElementById(trackId);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-            }
-
-            // クリックされたボタンをアクティブにする
-            event.currentTarget.classList.add('active');
+        // XSS対策用エスケープ
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
     </script>
 </body>
