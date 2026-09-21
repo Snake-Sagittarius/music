@@ -258,7 +258,7 @@
 
                 // メディアファイルパス (- File: xxx)
                 const fileMatch = trimmed.match(/^[-*]?\s*File:\s*(.+)$/mi);
-                const file = fileMatch ? fileMatch[1].trim() : '';
+                const file =  "media/" + (fileMatch ? fileMatch[1].trim() : '');
 
                 // 英語・日本語歌詞の抽出 (## English / ## Japanese)
                 let english = '';
