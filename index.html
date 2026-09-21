@@ -311,8 +311,11 @@
                 // メディアタイプの自動判定（動画か音声か）
                 const ext = song.file.split('.').pop().toLowerCase();
                 const isVideo = ['mp4', 'webm', 'ogv', 'mov'].includes(ext);
+                const vttFile = song.file.replace(/\.[^/.]+$/, ".vtt");
                 const mediaTag = isVideo
-                    ? `<video controls src="${escapeHtml(song.file)}"></video>`
+                    ? `<video controls src="${escapeHtml(song.file)}">
+                         <track kind="subtitles" src="${escapeHtml(vttFile)}" srclang="en" label="English" default>
+                       </video>`
                     : `<audio controls src="${escapeHtml(song.file)}"></audio>`;
 
                 // コンテンツパネル生成
