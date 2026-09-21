@@ -218,13 +218,22 @@
             pointer-events: none; /* 動画のクリック・再生操作を妨げない設定 */
             overflow: hidden;
             background: rgba(0, 0, 0, 0.3); /* 動画が見やすいように少し暗くする */
+
+            /* 初期状態は非表示（透明）にし、ふんわり表示されるようにtransitionを設定 */
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        /* 字幕表示アクティブ時のクラス */
+        .subtitle-overlay.visible {
+            opacity: 1;
         }
 
         /* スクロールする歌詞コンテナ */
         .subtitle-scroll-container {
             width: 100%;
             position: absolute;
-            top: 50%; /* ★コンテナの起点を常に動画の上下中央に設定 */
+            top: 50%; /* コンテナの起点を常に動画の上下中央に設定 */
             left: 0;
             text-align: center;
             transition: transform 0.5s ease-out; /* スクロールの動きを滑らかに */
@@ -236,18 +245,25 @@
             font-weight: bold;
             color: #ffffff;
             margin: 1.2rem 0;
-            opacity: 0.3; /* 非アクティブな行は半透明 */
+            opacity: 0.25; /* 非アクティブな行は半透明 */
             transition: all 0.3s ease;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.7);
-            white-space: pre-wrap; /* ★複数行の歌詞ブロックがあった場合に対応 */
+            white-space: pre-wrap; /* 複数行の歌詞ブロックがあった場合に対応 */
         }
 
-        /* 現在再生中の歌詞行のハイライト */
+        /* 現在再生中の歌詞行（メインハイライト） */
         .subtitle-line.active {
             opacity: 1;
             color: var(--accent-color); /* アクティブな歌詞の色 */
             font-size: 1.4rem;
             transform: scale(1.05);
+        }
+
+        /* アクティブ行の前後の行（サブハイライト） */
+        .subtitle-line.nearby {
+            opacity: 0.85; /* くっきり見えるように不透明度を高く */
+            color: #ffffff; /* 鮮やかな白 */
+            font-size: 1.25rem;
         }
 
     </style>
@@ -415,6 +431,7 @@
                     .then(res => res.text())
                     .then(vttText => {
                         const cues = parseVTT(vttText);
+                        const overlay = scrollContainer.parentElement; // .subtitle-overlay を取得
                         
                         // 画面上に歌詞の行要素を生成
                         scrollContainer.innerHTML = cues.map((cue, i) => 
@@ -423,26 +440,47 @@
 
                         const lines = scrollContainer.querySelectorAll('.subtitle-line');
 
-                        // スクロール位置とハイライトを更新する共通関数
+                        // スクロール位置とハイライト（メイン＆前後行）を更新する関数
                         const updateScroll = (activeIndex) => {
                             lines.forEach((line, i) => {
-                                line.classList.toggle('active', i === activeIndex);
+                                line.classList.remove('active', 'nearby');
+                                if (i === activeIndex) {
+                                    // 現在再生中の行
+                                    line.classList.add('active');
+                                } else if (Math.abs(i - activeIndex) === 1) {
+                                    // 直前および直後の1行
+                                    line.classList.add('nearby');
+                                }
                             });
 
                             const activeLine = lines[activeIndex !== -1 ? activeIndex : 0];
                             if (activeLine) {
-                                // top: 50% が基準のため、(要素の上端位置 + 高さの半分) をマイナス方向に引っ張るだけで確実に中央に来ます
                                 const translateY = -(activeLine.offsetTop + activeLine.clientHeight / 2);
                                 scrollContainer.style.transform = `translateY(${translateY}px)`;
                             }
                         };
 
-                        // 再生前の初期状態をセット（最初の行を中央に配置）
-                        if (lines.length > 0) updateScroll(-1);
-
                         // 再生時間更新イベントの監視
                         video.addEventListener('timeupdate', () => {
                             const currentTime = video.currentTime;
+                            
+                            // 1. 字幕エリア全体の表示/非表示タイミングの判定
+                            if (cues.length > 0) {
+                                const firstCueStart = cues[0].start;
+                                const lastCueEnd = cues[cues.length - 1].end;
+                                
+                                // 最初のタイムスタンプの2秒前〜最後の歌詞終了の1秒後まで表示
+                                const showTime = Math.max(0, firstCueStart - 2);
+                                const hideTime = lastCueEnd + 1;
+
+                                if (currentTime >= showTime && currentTime <= hideTime && !video.ended) {
+                                    overlay.classList.add('visible');
+                                } else {
+                                    overlay.classList.remove('visible');
+                                }
+                            }
+
+                            // 2. 現在アクティブな歌詞の算出
                             let activeIndex = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
 
                             if (activeIndex === -1) {
@@ -452,6 +490,11 @@
                             if (activeIndex !== -1) {
                                 updateScroll(activeIndex);
                             }
+                        });
+
+                        // 動画終了時には確実にフェードアウト
+                        video.addEventListener('ended', () => {
+                            overlay.classList.remove('visible');
                         });
                     })
                     .catch(err => console.log('VTT字幕なし、または読み込み失敗:', err));
