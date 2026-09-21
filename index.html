@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Music Gallery</title>
+    <title>AI-Generated Music</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -161,13 +161,16 @@
             padding: 1.25rem;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            white-space: pre-wrap;
             font-size: 0.95rem;
             line-height: 1.8;
             width: calc(50% - 0.75rem);
             min-width: 300px;    /* 縮めた時にこれ以上狭くならない最低幅 */
             overflow: auto;      /* resizeを有効にするための必須プロパティ */
             resize: horizontal;  /* 右下のつまみで横方向の手動リサイズを可能に */
+        }
+
+        .lyrics-text {
+            white-space: pre-wrap;
         }
 
         .lyrics-box h4 {
@@ -200,7 +203,7 @@
 <body>
 
     <header>
-        <h1>🎵 My AI Music Gallery</h1>
+        <h1>🎵 AI-Generated Music</h1>
     </header>
 
     <div class="main-container">
@@ -328,11 +331,11 @@
                         <div class="lyrics-grid">
                             <div class="lyrics-box">
                                 <h4>English</h4>
-${escapeHtml(song.english)}
+                                <div class="lyrics-text">${escapeHtml(song.english)}</div>
                             </div>
                             <div class="lyrics-box">
                                 <h4>日本語訳</h4>
-${escapeHtml(song.japanese)}
+                                <div class="lyrics-text">${escapeHtml(song.japanese)}</div>
                             </div>
                         </div>
                     </div>
