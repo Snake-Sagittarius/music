@@ -1,5 +1,5 @@
 # The Art of Conversation
-- File: media/The_Art_of_Conversation.mp4
+- File: The_Art_of_Conversation.mp4
 
 ## English
 [Intro]
