@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
     <title>AI-Generated Music</title>
     <style>
         :root {
@@ -545,8 +546,9 @@
                 return cues;
             }
 
-            // 時間表記 (00:01:20.500) を秒数 (80.5) に変換する関数
+            // 時間表記 (00:01:20.500 または 01:20.500) を秒数に変換する関数
             function parseTimeToSeconds(timeStr) {
+                if (!timeStr) return 0;
                 const parts = timeStr.split(':');
                 let seconds = 0;
                 if (parts.length === 3) {
@@ -555,7 +557,7 @@
                     seconds += parseFloat(parts[2]);
                 } else if (parts.length === 2) {
                     seconds += parseFloat(parts[0]) * 60;
-                    seconds += parseFloat(parts[2]);
+                    seconds += parseFloat(parts[1]);
                 }
                 return seconds;
             }
