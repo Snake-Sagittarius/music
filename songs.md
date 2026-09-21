@@ -51,7 +51,6 @@ Everything is going to be alright tonight.
 I will help you and we're going to succeed.
 This is the knowledge that you really need.
 Yeah, we're going to make it work out fine.
-One more time let's sing along with this line.
 
 [Chorus]
 （Chorus 繰り返し）
@@ -76,11 +75,11 @@ One more time let's sing along with this line.
 「はい、ありがとう」それがいつもの決まり文句。
 その日は、単純に明るい気持ちで過ごしながら。
 
-[Pre-Chorus]【鍵を盗まれ侵入経路の形跡や臭いも雨で消えた】
+[Pre-Chorus]【鍵が無くなり雨で盗難の形跡が消える】
 「鍵をなくした（I've lost my keys）」と言うのは、今もそれらが見当たらない場合。
-「昨日なくした（I lost them yesterday）」なら、いつ、どうやって、が具体的。（※「どうやって」は不明）
+「昨日なくした（I lost them yesterday）」なら、いつ、どうやって、が具体的。（※手口はバレてない）
 「一週間ずっと雨が降っている」と言えば、まだ水たまりが残っている状態。
-でも、「昨夜雨が降った」と言えば、今はもう降っていない。（※今は不明）
+でも、「昨夜雨が降った」と言えば、今はもう降っていない。（※印象操作）
 
 [Chorus]【怪しい店での取引】
 これらはありますか？ええ、ありますよ。
@@ -113,8 +112,7 @@ C:なんてことだ、空はこんなに青くて明るい。（※話題逸ら
 A:今夜はきっと、すべてうまくいくはずさ。（※どうでもいい、早く寝たい）
 B:僕が手伝うよ、僕らならきっとうまくいく。（※パンデミック期待）
 C:これこそが、君に本当に必要な知識なんだ。（※医学）
-B:ああ、きっとうまくいくさ。（※勘違い）
-ABC:もう一度、このフレーズを一緒に歌おう。（※濃厚接触）
+AB:ああ、きっとうまくいくさ。（※聞いてない）
 
 [Chorus]
 （Chorus 繰り返し）
