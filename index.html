@@ -445,10 +445,8 @@
                             lines.forEach((line, i) => {
                                 line.classList.remove('active', 'nearby');
                                 if (i === activeIndex) {
-                                    // 現在再生中の行
                                     line.classList.add('active');
                                 } else if (Math.abs(i - activeIndex) === 1) {
-                                    // 直前および直後の1行
                                     line.classList.add('nearby');
                                 }
                             });
@@ -460,16 +458,26 @@
                             }
                         };
 
+                        // ★追加：スクロール飛び防止用の変数
+                        let lastTime = 0;
+
                         // 再生時間更新イベントの監視
                         video.addEventListener('timeupdate', () => {
                             const currentTime = video.currentTime;
+
+                            // ★追加：シーク操作やリプレイで時間が大きく（1秒以上）飛んだ場合、アニメーションを一時無効化して瞬間移動させる
+                            if (Math.abs(currentTime - lastTime) > 1.0) {
+                                scrollContainer.style.transition = 'none';
+                            } else {
+                                scrollContainer.style.transition = ''; // 空文字にするとCSSの標準設定に戻る
+                            }
+                            lastTime = currentTime;
                             
                             // 1. 字幕エリア全体の表示/非表示タイミングの判定
                             if (cues.length > 0) {
                                 const firstCueStart = cues[0].start;
                                 const lastCueEnd = cues[cues.length - 1].end;
                                 
-                                // 最初のタイムスタンプの2秒前〜最後の歌詞終了の1秒後まで表示
                                 const showTime = Math.max(0, firstCueStart - 2);
                                 const hideTime = lastCueEnd + 1;
 
@@ -492,9 +500,19 @@
                             }
                         });
 
-                        // 動画終了時には確実にフェードアウト
+                        // 動画終了時の処理
                         video.addEventListener('ended', () => {
                             overlay.classList.remove('visible');
+                            
+                            // ★追加：フェードアウト完了（0.6秒）を待ってから、裏側でこっそり初期状態にリセット
+                            setTimeout(() => {
+                                if (video.paused) { // 再生が止まっている場合のみ実行
+                                    scrollContainer.style.transition = 'none'; // アニメーションを一時オフ
+                                    updateScroll(-1); // ハイライトを消し、位置を先頭行に戻す
+                                    scrollContainer.offsetHeight; // ブラウザに位置を即時反映させる（強制リフロー）
+                                    scrollContainer.style.transition = ''; // アニメーション設定を元に戻す
+                                }
+                            }, 600);
                         });
                     })
                     .catch(err => console.log('VTT字幕なし、または読み込み失敗:', err));
