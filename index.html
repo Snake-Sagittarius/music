@@ -216,17 +216,16 @@
             width: 100%;
             height: 100%;
             pointer-events: none; /* 動画のクリック・再生操作を妨げない設定 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.3); /* 動画が見やすいように少し暗くする */
         }
 
         /* スクロールする歌詞コンテナ */
         .subtitle-scroll-container {
-            width: 90%;
+            width: 100%;
+            position: absolute;
+            top: 50%; /* ★コンテナの起点を常に動画の上下中央に設定 */
+            left: 0;
             text-align: center;
             transition: transform 0.5s ease-out; /* スクロールの動きを滑らかに */
         }
@@ -240,6 +239,7 @@
             opacity: 0.3; /* 非アクティブな行は半透明 */
             transition: all 0.3s ease;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.7);
+            white-space: pre-wrap; /* ★複数行の歌詞ブロックがあった場合に対応 */
         }
 
         /* 現在再生中の歌詞行のハイライト */
@@ -248,12 +248,6 @@
             color: var(--accent-color); /* アクティブな歌詞の色 */
             font-size: 1.4rem;
             transform: scale(1.05);
-        }
-
-        /* ブラウザ標準の字幕表示を非表示化 */
-        video::cue {
-            background: transparent;
-            color: transparent;
         }
 
     </style>
@@ -373,9 +367,7 @@
                 const vttFile = song.file.replace(/\.[^/.]+$/, ".vtt");
                 const mediaTag = isVideo
                     ? `<div class="video-wrapper">
-                         <video id="video-${index}" controls src="${escapeHtml(song.file)}">
-                           <track kind="subtitles" src="${escapeHtml(vttFile)}" srclang="en" label="English" default>
-                         </video>
+                         <video id="video-${index}" controls src="${escapeHtml(song.file)}"></video>
                          <div class="subtitle-overlay">
                            <div class="subtitle-scroll-container" id="sub-scroll-${index}"></div>
                          </div>
@@ -429,64 +421,66 @@
                             `<div class="subtitle-line" id="cue-${index}-${i}">${escapeHtml(cue.text)}</div>`
                         ).join('');
 
+                        const lines = scrollContainer.querySelectorAll('.subtitle-line');
+
+                        // スクロール位置とハイライトを更新する共通関数
+                        const updateScroll = (activeIndex) => {
+                            lines.forEach((line, i) => {
+                                line.classList.toggle('active', i === activeIndex);
+                            });
+
+                            const activeLine = lines[activeIndex !== -1 ? activeIndex : 0];
+                            if (activeLine) {
+                                // top: 50% が基準のため、(要素の上端位置 + 高さの半分) をマイナス方向に引っ張るだけで確実に中央に来ます
+                                const translateY = -(activeLine.offsetTop + activeLine.clientHeight / 2);
+                                scrollContainer.style.transform = `translateY(${translateY}px)`;
+                            }
+                        };
+
+                        // 再生前の初期状態をセット（最初の行を中央に配置）
+                        if (lines.length > 0) updateScroll(-1);
+
                         // 再生時間更新イベントの監視
                         video.addEventListener('timeupdate', () => {
                             const currentTime = video.currentTime;
                             let activeIndex = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
 
-                            // 該当する行がない場合、直前の行を基準にする
                             if (activeIndex === -1) {
                                 activeIndex = cues.findLastIndex(c => currentTime >= c.start);
                             }
 
-                            // スタイル更新とスクロール処理
-                            const lines = scrollContainer.querySelectorAll('.subtitle-line');
-                            lines.forEach((line, i) => {
-                                if (i === activeIndex) {
-                                    line.classList.add('active');
-                                } else {
-                                    line.classList.remove('active');
-                                }
-                            });
-
-                            if (activeIndex !== -1 && lines[activeIndex]) {
-                                // アクティブな行がオーバーレイの上下中央に来るようY軸オフセットを計算
-                                const activeLine = lines[activeIndex];
-                                const containerHeight = scrollContainer.parentElement.clientHeight;
-                                const lineOffsetTop = activeLine.offsetTop;
-                                const lineHeight = activeLine.clientHeight;
-
-                                const translateY = (containerHeight / 2) - (lineOffsetTop + lineHeight / 2);
-                                scrollContainer.style.transform = `translateY(${translateY}px)`;
+                            if (activeIndex !== -1) {
+                                updateScroll(activeIndex);
                             }
                         });
                     })
                     .catch(err => console.log('VTT字幕なし、または読み込み失敗:', err));
             });
 
-            // 簡易VTTパーサー関数
+            // VTTパーサー関数（空行や複数行テキストに対応できるよう強化）
             function parseVTT(vttText) {
                 const lines = vttText.split(/\r?\n/);
                 const cues = [];
                 let currentCue = null;
 
-                const timeReg = /(\d{2}:)?\d{2}:\d{2}\.\d{3}/;
-
                 lines.forEach(line => {
                     line = line.trim();
                     if (line.includes('-->')) {
+                        if (currentCue) cues.push(currentCue);
                         const times = line.split('-->');
                         currentCue = {
                             start: parseTimeToSeconds(times[0].trim()),
                             end: parseTimeToSeconds(times[1].trim()),
                             text: ''
                         };
-                    } else if (currentCue && line !== '' && !line.startsWith('WEBVTT')) {
-                        currentCue.text += (currentCue.text ? '\n' : '') + line;
+                    } else if (line === '' && currentCue) {
                         cues.push(currentCue);
                         currentCue = null;
+                    } else if (currentCue && !line.startsWith('WEBVTT')) {
+                        currentCue.text += (currentCue.text ? '\n' : '') + line;
                     }
                 });
+                if (currentCue) cues.push(currentCue);
                 return cues;
             }
 
