@@ -232,11 +232,15 @@ I need some time just lying on a beach greatly
 Doing absolutely nothing and just forgetting it all
 But instead I will answer this loud inner call
 
+[Chorus]
+
 [Bridge]
 I was planning to give my official notice tomorrow
 Leaving behind all this hesitation and this sorrow
 I accept a new position that I have created myself
 Putting my own hard-earned dreams up on the shelf
+
+[Chorus x2]
 
 [Outro]
 I'm searching for something, I found it today
@@ -261,11 +265,15 @@ I am walking on this brand-new highway
 何もかも忘れてただのんびりしたかったけれど
 逃げる代わりに、僕の心の中で大きく鳴り響く声に応えることにした
 
+[Chorus]
+
 [Bridge]
 明日、正式な辞表を提出するつもりだった
 すべての迷いや悲しみを後ろに置き去りにして
 自分自身の手で創り出した新しいポジション（代表／創業者）に就くんだ
 苦労して築き上げてきた地位への夢は、棚に仕舞い込んで
+
+[Chorus x2]
 
 [Outro]
 ずっと何かを探していたけれど、今日それを見つけた
