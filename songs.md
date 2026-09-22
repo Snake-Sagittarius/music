@@ -53,7 +53,6 @@ This is the knowledge that you really need.
 Yeah, we're going to make it work out fine.
 
 [Chorus]
-（Chorus 繰り返し）
 
 [Outro]
 (And that's Unit One, everybody.)
@@ -115,7 +114,6 @@ C:これこそが、君に本当に必要な知識なんだ。（※医学）
 AB:ああ、きっとうまくいくさ。（※聞いてない）
 
 [Chorus]
-（Chorus 繰り返し）
 
 [Outro]
 （というわけで、皆さん、ユニット1は以上です。）
