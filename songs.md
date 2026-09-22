@@ -151,16 +151,22 @@ I could be called to any job just you wait and see
 What that means is I write my own rules every single day
 No more working with those corporate fools who stand in my way
 
+[Pre-Chorus]
+
+[Chorus]
+
 [Bridge]
 I've worked for this firm almost my whole career it's true
 It's been a bit stressful with too many things to do
 But I'm ready for a change the time to act is finally here
 You should do what you want and conquer every single fear
 
+[Chorus]
+
 [Outro]
-Gotta give it a try! Gotta give it a try!
+(Gotta give it a try! Gotta give it a try!)
 I'm gotta go, I'm finding that I'm finally free!
-Yeah! This is my life now!
+Yeah! This is my life now!(Go!)
 
 ## Japanese
 [Verse 1]
@@ -187,14 +193,20 @@ Yeah! This is my life now!
 それが意味するのは、毎日自分でルールを決めるってことだ
 僕の邪魔をする会社の連中と働くことはもう二度とない
 
+[Pre-Chorus]
+
+[Chorus]
+
 [Bridge]
 キャリアのほとんどをこの会社に捧げてきたのは事実だ
 やることが多すぎて、ずっとストレスフルだった
 でも変化の準備はできた、行動を起こす時がやってきたんだ
 やりたいことをやるべきだ、あらゆる恐れを克服するんだ
 
+[Chorus]
+
 [Outro]
-やってみるしかない！挑戦するんだ！
+(やってみるしかない！挑戦するんだ！)
 もう行かなくちゃ、ついに自由になれたんだ！
 そうさ！これがこれからの僕の人生だ！
 
