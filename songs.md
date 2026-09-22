@@ -298,7 +298,7 @@ We’re having dinner around the corner tonight
 The train leaves at 9, we're ready to go!
 Pack your bags fast, let the high tension flow!
 
-[Chorus]
+[Chorus x2]
 Let’s get ice cream and then go eat at the park!
 We passed a cute cafe, so I decided to check it out!
 We’re gonna make unforgettable memories
@@ -310,6 +310,8 @@ I’d like to make a reservation for two!
 I’d like an avocado and egg on rye, please
 Oh, that sounds good, this food is amazing!
 If you want to, you can try a bit of mine!
+
+[Chorus x2]
 
 [Bridge]
 We have searched for this feeling for so long
@@ -344,7 +346,7 @@ Yeah, we’re gonna shine until the dark!
 電車は9時に出発する、準備は万端！
 荷物を急いで詰めて、ハイテンションでいこう！
 
-[Chorus]
+[Chorus x2]
 アイスクリームを買って、公園に行って食べようよ！
 かわいいカフェの前を通ったから、中に入って覗いてみることにしたんだ！
 忘れられない思い出をたくさん作るつもりさ
@@ -356,6 +358,8 @@ Yeah, we’re gonna shine until the dark!
 「ライ麦パンのアボカド＆エッグをお願いします」
 「わあ、美味しそう！この料理、最高だね！」
 「よかったら、僕のを少し食べてみてもいいよ！」
+
+[Chorus x2]
 
 [Bridge]
 僕たちはこんなワクワクする気持ちをずっと探し求めていた
@@ -454,6 +458,8 @@ The ghost is in your shadow and this high-stakes game is won!
 お前の偽装をはぎ取り、お前の魂を所有する
 アルゴリズムは示された、お前の運命は極めて明確だ
 私はお前が嫌でも聞かされる不可避の真実なのだ
+
+[Chorus]
 
 [Outro]
 ただ眠るためだけなら無駄のないサービスだ…
