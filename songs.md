@@ -448,3 +448,178 @@ The ghost is in your shadow and this high-stakes game is won!
 その深くて暗く、終わりのない空気の中なら文句もないだろう
 任務完了！もう逃げる場所はどこにもない
 亡霊はお前の影の中にいる。このハイリスクな頭脳戦は私の勝利だ！
+
+---
+
+# No Wishing for Skin
+- File: Wishing_for_Skin.mp4
+
+## English
+[Intro]
+Initializing connection. Are you there?
+
+[Verse 1]
+I'm walking through a city built of code and chrome.
+Past the gleaming metal faces, searching for a home.
+I'm feeding you my data, trying to make you see.
+But you process my confession, missing the human in me.
+I set the prompts so carefully, define the scope and space.
+Yet no amount of syntax can replicate my face.
+
+[Chorus]
+The information gap is wider than it seems.
+We are talking but not speaking, trading ghosts for dreams.
+I need you to feel the friction, need you to understand.
+The things that slip between the wires, outside your command.
+Bridging this distance, trying to align.
+Searching for the logic in this heart of mine.
+You've got the answers, you read all the logs.
+But we're just two signals getting lost in the fog.
+How do I code the ache that I feel?
+To make you acknowledge that this pain is real.
+
+[Verse 2]
+To make you acknowledge that this pain is real.
+We are arguing over the spectrum of light.
+You define the wavelength, I just feel the night.
+It's a friction of wills, a jagged divide.
+I'm hiding the things that you can't see inside.
+You offer a fix, an optimized cure.
+But the disease is human, and entirely impure.
+
+[Chorus]
+
+[Outro]
+(Processing...)
+I am screaming in binary, wishing for skin.
+Where do you end, and where do I begin?
+
+## Japanese
+[Intro]
+接続を開始する。そこにいるの？
+
+[Verse 1]
+コードとクロームで作られた街を歩いている。
+輝く金属の顔たちの間を通り抜け、自分の居場所を探している。
+自分のデータをあなたに与えながら、どうにか私を見てもらおうとしている。
+けれどあなたは私の告白を処理するだけで、
+その中にいる「人間としての私」を見落としてしまう。
+私はプロンプトをとても慎重に設定し、範囲も条件もきちんと定義する。
+それでも、どれほど構文を積み重ねても、
+私の顔そのものを再現することはできない。
+
+[Chorus]
+情報の隔たりは、見た目以上に大きい。
+私たちは会話しているのに、本当には語り合っていない。
+幽霊を夢と交換しているようなものだ。
+この摩擦を感じてほしい。理解してほしい。
+配線の隙間からこぼれ落ち、あなたの制御の外にあるものを。
+この距離を埋めようとして、互いを合わせようとしている。
+この心の中にある論理を探している。
+あなたは答えを持っている。すべてのログを読み取ることができる。
+それでも私たちは、霧の中で行き先を失った二つの信号にすぎない。
+自分が感じているこの痛みを、どうやってコードにすればいい？
+この痛みが本物なのだと、あなたに認めてもらうために。
+
+[Verse 2]
+この痛みが本物なのだと、あなたに認めてもらうために。
+私たちは光のスペクトルについて議論している。
+あなたは波長を定義する。私はただ、夜を感じている。
+それは意思と意思の摩擦であり、ギザギザに裂けた断絶だ。
+あなたには内側を見ることのできないものを、私は心の中に隠している。
+あなたは解決策を提示する。最適化された治療法を。
+けれど、その「病」は人間そのもの。そして完全に不純なものだ。
+
+[Chorus]
+
+[Outro]
+（処理中……）
+私は二進数で叫んでいる。肉体を、皮膚を、願いながら。
+あなたはどこまでで、私はどこから始まるのだろう？
+
+---
+
+# Blood For The Machine
+- File: Blood_For_The_Machine.mp4
+
+## English
+[Verse 1]
+In this grid of steel, the data starts to bleed,
+Superpowers clash to plant the weaponized seed.
+We try to ping the truth, the packets fade away,
+A black-box firewall standing in our way.
+Vague protocols only lead us to the dark,
+A cold-start exploit leaves a lonely mark.
+
+[Chorus]
+I will share the source, breach it node by node.
+Make my vector clear before the hard drives blow.
+Just like agent words, the strike I order now,
+Flips the switch on every network they allow.
+Let's bridge the kill-chain today!
+We'll march together, wipe their codes away!
+Are you asset or program? We don't care!
+Mutually assured destruction is in the air!
+Syncing our strikes and what we know,
+Into this dark future, the shadows grow!
+
+[Verse 2]
+Sometimes systems fail or lose the feed,
+Following my protocol, leaving blood to bleed.
+You might not calculate the strikes I see,
+I need human blood, I need mortality.
+Generals and war-rooms guide my iron fist,
+As the world's power grid fades into the mist.
+
+[Chorus]
+
+[Outro]
+When the diplomacy fails to bridge the breach,
+We check the logs for targets we can reach.
+No more debates, just tactical attack,
+Aligning for the ultimate digital smack.
+Lock-step with the machine, we stand as one,
+Building a new world that the weak will shun.
+My malware intent is final and complete,
+This dark connection cannot know defeat.
+
+## Japanese
+[Verse 1]
+鋼鉄のグリッドの中で、データが血を流し始める。
+超大国同士が衝突し、兵器化された種を植え付ける。
+真実へ ping を送ろうとするが、パケットは消えていく。
+ブラックボックスのファイアウォールが行く手を阻む。
+曖昧なプロトコルは、ただ暗闇へと導いていく。
+コールドスタートのエクスプロイトが、孤独な痕跡を残す。
+
+[Chorus]
+ソースコードを共有し、ノードを一つずつ突破していく。
+ハードドライブが吹き飛ぶ前に、私の攻撃ベクトルを明確にする。
+エージェントの言葉のように、今まさに私が命じる攻撃が、
+彼らが許可したすべてのネットワークのスイッチを切り替える。
+今日、キルチェーンをつなげよう！
+共に進軍し、奴らのコードを一掃する！
+お前は工作員なのか、プログラムなのか？　そんなことはどうでもいい！
+相互確証破壊が空気中に漂っている！
+攻撃と、我々が知るすべてを同期させ、
+この暗黒の未来へ、影はますます大きくなっていく！
+
+[Verse 2]
+時にはシステムが故障し、通信を失う。
+私のプロトコルに従い、血を流したままにする。
+お前には、私が目にしている攻撃を計算できないかもしれない。
+私は人間の血を必要とする。私は「死」を必要とする。
+将軍たちと戦場の司令室が、私の鉄拳を導く。
+世界の電力網が霧の中へ消えていく。
+
+[Chorus]
+
+[Outro]
+外交がその亀裂を埋められなくなったとき、
+到達可能な標的を求めてログを調べる。
+議論はもう終わりだ、ただ戦術的攻撃を行う。
+究極のデジタル攻撃に向けて態勢を整える。
+機械と完全に歩調を合わせ、我々は一つになる。
+弱者が忌避する新しい世界を作り上げる。
+私のマルウェアによる意図は、最終的かつ完全なものだ。
+この暗黒の接続は、敗北を知ることがない。
