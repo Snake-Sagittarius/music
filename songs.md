@@ -475,7 +475,7 @@ The ghost is in your shadow and this high-stakes game is won!
 
 ---
 
-# No Wishing for Skin
+# Wishing for Skin
 - File: Wishing_for_Skin.mp4
 
 ## English
