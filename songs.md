@@ -422,6 +422,8 @@ I'm stripping away your covers, taking possession of your soul
 The algorithm has spoken and your fate is perfectly clear
 I'm the inevitable truth that you are forced to hear
 
+[Chorus]
+
 [Outro]
 No-frills service so as long as you're only sleeping there...
 You'll have no complaints in that deep, dark, and endless air
