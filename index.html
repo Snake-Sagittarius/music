@@ -136,10 +136,116 @@
             border: 1px solid var(--border-color);
         }
 
+        /* VTT編集モードコントロール */
+        .edit-toggle-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .edit-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            user-select: none;
+        }
+
+        .edit-toggle-label input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .player-editor-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .player-editor-wrapper.edit-mode {
+            flex-direction: row;
+            align-items: stretch;
+        }
+
+        .player-editor-wrapper.edit-mode .video-wrapper {
+            flex: 1 1 55%;
+            min-width: 0;
+        }
+
+        .vtt-editor-panel {
+            display: none;
+            flex: 1 1 45%;
+            min-width: 280px;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .player-editor-wrapper.edit-mode .vtt-editor-panel {
+            display: flex;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .editor-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .editor-btn:hover {
+            background: var(--accent-color);
+            color: #0f172a;
+            font-weight: bold;
+        }
+
+        .vtt-textarea {
+            width: 100%;
+            flex: 1;
+            min-height: 250px;
+            background: #0f172a;
+            color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.6rem;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            resize: vertical;
+            white-space: pre;
+            outline: none;
+        }
+
+        .vtt-textarea:focus {
+            border-color: var(--accent-color);
+        }
+
         audio, video {
             width: 100%;
             border-radius: 4px;
             outline: none;
+            display: block;
         }
 
         /* 歌詞セクション */
@@ -165,9 +271,9 @@
             font-size: 0.95rem;
             line-height: 1.8;
             width: calc(50% - 0.75rem);
-            min-width: 300px;    /* 縮めた時にこれ以上狭くならない最低幅 */
-            overflow: auto;      /* resizeを有効にするための必須プロパティ */
-            resize: horizontal;  /* 右下のつまみで横方向の手動リサイズを可能に */
+            min-width: 300px;
+            overflow: auto;
+            resize: horizontal;
         }
 
         .lyrics-text {
@@ -198,6 +304,9 @@
             .lyrics-grid {
                 grid-template-columns: 1fr;
             }
+            .player-editor-wrapper.edit-mode {
+                flex-direction: column;
+            }
         }
 
         /* 動画と字幕オーバーレイを包む枠 */
@@ -216,28 +325,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* 動画のクリック・再生操作を妨げない設定 */
+            pointer-events: none;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.3); /* 動画が見やすいように少し暗くする */
-
-            /* 初期状態は非表示（透明）にし、ふんわり表示されるようにtransitionを設定 */
+            background: rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 0.6s ease;
+            user-select: none;
+            touch-action: none;
         }
 
-        /* 字幕表示アクティブ時のクラス */
         .subtitle-overlay.visible {
             opacity: 1;
+        }
+
+        /* 編集モード時のオーバーレイのスタイル */
+        .subtitle-overlay.edit-mode-active {
+            pointer-events: auto;
+            cursor: grab;
+        }
+
+        .subtitle-overlay.edit-mode-active:active {
+            cursor: grabbing;
         }
 
         /* スクロールする歌詞コンテナ */
         .subtitle-scroll-container {
             width: 100%;
             position: absolute;
-            top: 50%; /* コンテナの起点を常に動画の上下中央に設定 */
+            top: 50%;
             left: 0;
             text-align: center;
-            transition: transform 0.5s ease-out; /* スクロールの動きを滑らかに */
+            transition: transform 0.5s ease-out;
         }
 
         /* 各歌詞の行スタイル */
@@ -246,27 +364,24 @@
             font-weight: bold;
             color: #ffffff;
             margin: 1.2rem 0;
-            opacity: 0.25; /* 非アクティブな行は半透明 */
+            opacity: 0.25;
             transition: all 0.3s ease;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.7);
-            white-space: pre-wrap; /* 複数行の歌詞ブロックがあった場合に対応 */
+            white-space: pre-wrap;
         }
 
-        /* 現在再生中の歌詞行（メインハイライト） */
         .subtitle-line.active {
             opacity: 1;
-            color: var(--accent-color); /* アクティブな歌詞の色 */
+            color: var(--accent-color);
             font-size: 1.4rem;
             transform: scale(1.05);
         }
 
-        /* アクティブ行の前後の行（サブハイライト） */
         .subtitle-line.nearby {
-            opacity: 0.85; /* くっきり見えるように不透明度を高く */
-            color: #ffffff; /* 鮮やかな白 */
+            opacity: 0.85;
+            color: #ffffff;
             font-size: 1.25rem;
         }
-
     </style>
 </head>
 <body>
@@ -320,7 +435,6 @@
 
         // 簡易マークダウンパーサー
         function parseSongsMarkdown(mdText) {
-            // "---" で各曲ブロックに分割
             const rawBlocks = mdText.split(/^---$/m);
             const songs = [];
 
@@ -328,15 +442,12 @@
                 const trimmed = block.trim();
                 if (!trimmed) return;
 
-                // 曲タイトル (# タイトル)
                 const titleMatch = trimmed.match(/^#\s+(.+)$/m);
                 const title = titleMatch ? titleMatch[1].trim() : 'Untitled';
 
-                // メディアファイルパス (- File: xxx)
                 const fileMatch = trimmed.match(/^[-*]?\s*File:\s*(.+)$/mi);
-                const file =  "media/" + (fileMatch ? fileMatch[1].trim() : '');
+                const file = "media/" + (fileMatch ? fileMatch[1].trim() : '');
 
-                // 英語・日本語歌詞の抽出 (## English / ## Japanese)
                 let english = '';
                 let japanese = '';
 
@@ -368,7 +479,6 @@
             contentArea.innerHTML = '';
 
             songs.forEach((song, index) => {
-                // ナビゲーションボタン生成
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <button class="nav-btn ${index === 0 ? 'active' : ''}" onclick="switchTrack(${index}, event)">
@@ -377,21 +487,32 @@
                 `;
                 navList.appendChild(li);
 
-                // メディアタイプの自動判定（動画か音声か）
-                // 動画の場合字幕表示に必要なタグを追加
                 const ext = song.file.split('.').pop().toLowerCase();
                 const isVideo = ['mp4', 'webm', 'ogv', 'mov'].includes(ext);
-                const vttFile = song.file.replace(/\.[^/.]+$/, ".vtt");
+
                 const mediaTag = isVideo
-                    ? `<div class="video-wrapper">
-                         <video id="video-${index}" controls src="${escapeHtml(song.file)}"></video>
-                         <div class="subtitle-overlay">
-                           <div class="subtitle-scroll-container" id="sub-scroll-${index}"></div>
+                    ? `<div class="edit-toggle-wrapper">
+                         <label class="edit-toggle-label">
+                           <input type="checkbox" id="edit-toggle-${index}"> 🛠️ VTT編集モード
+                         </label>
+                       </div>
+                       <div class="player-editor-wrapper" id="player-editor-${index}">
+                         <div class="video-wrapper">
+                           <video id="video-${index}" controls src="${escapeHtml(song.file)}"></video>
+                           <div class="subtitle-overlay" id="overlay-${index}">
+                             <div class="subtitle-scroll-container" id="sub-scroll-${index}"></div>
+                           </div>
+                         </div>
+                         <div class="vtt-editor-panel" id="editor-panel-${index}">
+                           <div class="editor-toolbar">
+                             <button type="button" class="editor-btn" id="btn-copy-${index}">📋 コピー</button>
+                             <button type="button" class="editor-btn" id="btn-download-${index}">💾 VTTダウンロード</button>
+                           </div>
+                           <textarea id="vtt-text-${index}" class="vtt-textarea" spellcheck="false" placeholder="WEBVTT..."></textarea>
                          </div>
                        </div>`
                     : `<audio controls src="${escapeHtml(song.file)}"></audio>`;
 
-                // コンテンツパネル生成
                 const article = document.createElement('article');
                 article.id = `track-${index}`;
                 article.className = `track-panel ${index === 0 ? 'active' : ''}`;
@@ -419,107 +540,294 @@
                 contentArea.appendChild(article);
             });
 
-            // HTML生成後に各動画へスクロール字幕機能をバインド
+            // 動画プレイヤーごとの字幕・編集機能バインド
             songs.forEach((song, index) => {
                 const video = document.getElementById(`video-${index}`);
                 const scrollContainer = document.getElementById(`sub-scroll-${index}`);
+                const overlay = document.getElementById(`overlay-${index}`);
+                const editToggle = document.getElementById(`edit-toggle-${index}`);
+                const editorWrapper = document.getElementById(`player-editor-${index}`);
+                const textarea = document.getElementById(`vtt-text-${index}`);
+                const btnCopy = document.getElementById(`btn-copy-${index}`);
+                const btnDownload = document.getElementById(`btn-download-${index}`);
+
                 if (!video || !scrollContainer) return;
 
                 const vttFile = song.file.replace(/\.[^/.]+$/, ".vtt");
+                let cues = [];
+                let isDragging = false;
+                let dragStartY = 0;
+                let initialTranslateY = 0;
+                let currentTranslateY = 0;
+                let lastTime = 0;
 
-                // VTTファイルをfetchしてパース（解析）
+                // VTTファイルをfetchしてパース
                 fetch(vttFile)
                     .then(res => res.text())
                     .then(vttText => {
-                        const cues = parseVTT(vttText);
-                        const overlay = scrollContainer.parentElement; // .subtitle-overlay を取得
-                        
-                        // 画面上に歌詞の行要素を生成
-                        scrollContainer.innerHTML = cues.map((cue, i) => 
-                            `<div class="subtitle-line" id="cue-${index}-${i}">${escapeHtml(cue.text)}</div>`
-                        ).join('');
-
-                        const lines = scrollContainer.querySelectorAll('.subtitle-line');
-
-                        // スクロール位置とハイライト（メイン＆前後行）を更新する関数
-                        const updateScroll = (activeIndex) => {
-                            lines.forEach((line, i) => {
-                                line.classList.remove('active', 'nearby');
-                                if (i === activeIndex) {
-                                    line.classList.add('active');
-                                } else if (Math.abs(i - activeIndex) === 1) {
-                                    line.classList.add('nearby');
-                                }
-                            });
-
-                            const activeLine = lines[activeIndex !== -1 ? activeIndex : 0];
-                            if (activeLine) {
-                                const translateY = -(activeLine.offsetTop + activeLine.clientHeight / 2);
-                                scrollContainer.style.transform = `translateY(${translateY}px)`;
-                            }
-                        };
-
-                        // ★追加：スクロール飛び防止用の変数
-                        let lastTime = 0;
-
-                        // 再生時間更新イベントの監視
-                        video.addEventListener('timeupdate', () => {
-                            const currentTime = video.currentTime;
-
-                            // ★追加：シーク操作やリプレイで時間が大きく（1秒以上）飛んだ場合、アニメーションを一時無効化して瞬間移動させる
-                            if (Math.abs(currentTime - lastTime) > 1.0) {
-                                scrollContainer.style.transition = 'none';
-                            } else {
-                                scrollContainer.style.transition = ''; // 空文字にするとCSSの標準設定に戻る
-                            }
-                            lastTime = currentTime;
-                            
-                            // 1. 字幕エリア全体の表示/非表示タイミングの判定
-                            if (cues.length > 0) {
-                                const firstCueStart = cues[0].start;
-                                const lastCueEnd = cues[cues.length - 1].end;
-                                
-                                const showTime = Math.max(0, firstCueStart - 2);
-                                const hideTime = lastCueEnd + 1;
-
-                                if (currentTime >= showTime && currentTime <= hideTime && !video.ended) {
-                                    overlay.classList.add('visible');
-                                } else {
-                                    overlay.classList.remove('visible');
-                                }
-                            }
-
-                            // 2. 現在アクティブな歌詞の算出
-                            let activeIndex = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
-
-                            if (activeIndex === -1) {
-                                activeIndex = cues.findLastIndex(c => currentTime >= c.start);
-                            }
-
-                            if (activeIndex !== -1) {
-                                updateScroll(activeIndex);
-                            }
-                        });
-
-                        // 動画終了時の処理
-                        video.addEventListener('ended', () => {
-                            overlay.classList.remove('visible');
-                            
-                            // ★追加：フェードアウト完了（0.6秒）を待ってから、裏側でこっそり初期状態にリセット
-                            setTimeout(() => {
-                                if (video.paused) { // 再生が止まっている場合のみ実行
-                                    scrollContainer.style.transition = 'none'; // アニメーションを一時オフ
-                                    updateScroll(-1); // ハイライトを消し、位置を先頭行に戻す
-                                    scrollContainer.offsetHeight; // ブラウザに位置を即時反映させる（強制リフロー）
-                                    scrollContainer.style.transition = ''; // アニメーション設定を元に戻す
-                                }
-                            }, 600);
-                        });
+                        textarea.value = vttText;
+                        cues = parseVTT(vttText);
+                        renderSubtitles();
                     })
-                    .catch(err => console.log('VTT字幕なし、または読み込み失敗:', err));
+                    .catch(err => {
+                        console.log('VTT字幕なし、または読み込み失敗:', err);
+                        textarea.value = "WEBVTT\n\n";
+                    });
+
+                // 字幕行エレメントの再生成
+                function renderSubtitles() {
+                    scrollContainer.innerHTML = cues.map((cue, i) => 
+                        `<div class="subtitle-line" id="cue-${index}-${i}">${escapeHtml(cue.text)}</div>`
+                    ).join('');
+                }
+
+                // スクロール位置とハイライト更新
+                function updateScroll(activeIndex, targetTranslateY = null) {
+                    const lines = scrollContainer.querySelectorAll('.subtitle-line');
+                    lines.forEach((line, i) => {
+                        line.classList.remove('active', 'nearby');
+                        if (i === activeIndex) {
+                            line.classList.add('active');
+                        } else if (Math.abs(i - activeIndex) === 1) {
+                            line.classList.add('nearby');
+                        }
+                    });
+
+                    if (targetTranslateY !== null) {
+                        scrollContainer.style.transform = `translateY(${targetTranslateY}px)`;
+                    } else {
+                        const activeLine = lines[activeIndex !== -1 ? activeIndex : 0];
+                        if (activeLine) {
+                            const translateY = -(activeLine.offsetTop + activeLine.clientHeight / 2);
+                            scrollContainer.style.transform = `translateY(${translateY}px)`;
+                        }
+                    }
+                }
+
+                // 時間に基づくハイライトスクロール
+                function updateScrollForTime(currentTime) {
+                    if (cues.length > 0) {
+                        const firstCueStart = cues[0].start;
+                        const lastCueEnd = cues[cues.length - 1].end;
+                        const showTime = Math.max(0, firstCueStart - 2);
+                        const hideTime = lastCueEnd + 1;
+
+                        if (currentTime >= showTime && currentTime <= hideTime && !video.ended) {
+                            overlay.classList.add('visible');
+                        } else {
+                            overlay.classList.remove('visible');
+                        }
+                    }
+
+                    let activeIndex = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
+                    if (activeIndex === -1) {
+                        activeIndex = cues.findLastIndex(c => currentTime >= c.start);
+                    }
+                    if (activeIndex !== -1) {
+                        updateScroll(activeIndex);
+                    }
+                }
+
+                // 編集モードON/OFF切り替え
+                if (editToggle) {
+                    editToggle.addEventListener('change', () => {
+                        if (editToggle.checked) {
+                            editorWrapper.classList.add('edit-mode');
+                            overlay.classList.add('edit-mode-active', 'visible');
+                        } else {
+                            editorWrapper.classList.remove('edit-mode');
+                            overlay.classList.remove('edit-mode-active');
+                            updateScrollForTime(video.currentTime);
+                        }
+                    });
+                }
+
+                // 再生時間の監視
+                video.addEventListener('timeupdate', () => {
+                    if (isDragging) return; // ドラッグ中は自動スクロール停止
+
+                    const currentTime = video.currentTime;
+                    if (Math.abs(currentTime - lastTime) > 1.0) {
+                        scrollContainer.style.transition = 'none';
+                    } else {
+                        scrollContainer.style.transition = '';
+                    }
+                    lastTime = currentTime;
+
+                    updateScrollForTime(currentTime);
+                });
+
+                // 動画終了時
+                video.addEventListener('ended', () => {
+                    if (editToggle && editToggle.checked) return;
+                    overlay.classList.remove('visible');
+                    setTimeout(() => {
+                        if (video.paused) {
+                            scrollContainer.style.transition = 'none';
+                            updateScroll(-1);
+                            scrollContainer.offsetHeight;
+                            scrollContainer.style.transition = '';
+                        }
+                    }, 600);
+                });
+
+                // --- ドラッグ＆ドロップによる字幕スクロールとタイムスタンプ連動 ---
+                overlay.addEventListener('pointerdown', (e) => {
+                    if (!editToggle || !editToggle.checked) return;
+
+                    // 動画下部20%領域はプレイヤー操作用として無視
+                    const rect = overlay.getBoundingClientRect();
+                    if (e.clientY - rect.top > rect.height * 0.8) return;
+
+                    isDragging = true;
+                    dragStartY = e.clientY;
+                    
+                    // 現在の transform から translateY を取得
+                    const style = window.getComputedStyle(scrollContainer);
+                    const matrix = new WebKitCSSMatrix(style.transform);
+                    initialTranslateY = matrix.m42;
+                    currentTranslateY = initialTranslateY;
+
+                    scrollContainer.style.transition = 'none';
+                    overlay.setPointerCapture(e.pointerId);
+                });
+
+                overlay.addEventListener('pointermove', (e) => {
+                    if (!isDragging) return;
+
+                    const deltaY = e.clientY - dragStartY;
+                    currentTranslateY = initialTranslateY + deltaY;
+                    
+                    // 画面中央に一番近い行（アクティブ行）を算出
+                    const lines = scrollContainer.querySelectorAll('.subtitle-line');
+                    let activeIndex = -1;
+                    let minDiff = Infinity;
+
+                    lines.forEach((line, i) => {
+                        const lineCenter = line.offsetTop + line.offsetHeight / 2;
+                        const diff = Math.abs(lineCenter - (-currentTranslateY));
+                        if (diff < minDiff) {
+                            minDiff = diff;
+                            activeIndex = i;
+                        }
+                    });
+
+                    updateScroll(activeIndex, currentTranslateY);
+
+                    // タイムスタンプ調整ロジック（玉突き含む）
+                    if (activeIndex !== -1 && cues[activeIndex]) {
+                        const now = video.currentTime;
+                        const cue = cues[activeIndex];
+                        let changed = false;
+
+                        if (now < cue.start) {
+                            cue.start = now;
+                            if (cue.start >= cue.end - cue.minDuration) {
+                                cue.end = cue.start + cue.minDuration;
+                                adjustNext(activeIndex);
+                            }
+                            adjustPrevious(activeIndex);
+                            changed = true;
+                        } else if (now > cue.end) {
+                            cue.end = now;
+                            if (cue.end <= cue.start + cue.minDuration) {
+                                cue.start = Math.max(0, cue.end - cue.minDuration);
+                                adjustPrevious(activeIndex);
+                            }
+                            adjustNext(activeIndex);
+                            changed = true;
+                        }
+
+                        if (changed) {
+                            textarea.value = generateVTT(cues);
+                        }
+                    }
+                });
+
+                const endDrag = (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    try { overlay.releasePointerCapture(e.pointerId); } catch(err) {}
+                    scrollContainer.style.transition = '';
+                    updateScrollForTime(video.currentTime);
+                };
+
+                overlay.addEventListener('pointerup', endDrag);
+                overlay.addEventListener('pointercancel', endDrag);
+
+                // 前の行への玉突き（押しつぶし）処理
+                function adjustPrevious(idx) {
+                    if (idx <= 0) return;
+                    const curr = cues[idx];
+                    const prev = cues[idx - 1];
+
+                    if (prev.end > curr.start) {
+                        prev.end = curr.start;
+                        if (prev.end - prev.start < prev.minDuration) {
+                            prev.start = prev.end - prev.minDuration;
+                            if (prev.start < 0) {
+                                prev.start = 0;
+                                prev.end = Math.min(curr.start, prev.minDuration);
+                            }
+                            adjustPrevious(idx - 1);
+                        }
+                    }
+                }
+
+                // 次の行への玉突き（押しつぶし）処理
+                function adjustNext(idx) {
+                    if (idx >= cues.length - 1) return;
+                    const curr = cues[idx];
+                    const next = cues[idx + 1];
+
+                    if (next.start < curr.end) {
+                        next.start = curr.end;
+                        if (next.end - next.start < next.minDuration) {
+                            next.end = next.start + next.minDuration;
+                            if (video.duration && next.end > video.duration) {
+                                next.end = video.duration;
+                                next.start = Math.max(curr.end, next.end - next.minDuration);
+                            }
+                            adjustNext(idx + 1);
+                        }
+                    }
+                }
+
+                // --- Textarea 手動編集イベント ---
+                textarea.addEventListener('focus', () => {
+                    video.pause();
+                });
+
+                textarea.addEventListener('input', () => {
+                    cues = parseVTT(textarea.value);
+                    renderSubtitles();
+                    updateScrollForTime(video.currentTime);
+                });
+
+                // コピーボタン
+                btnCopy.addEventListener('click', () => {
+                    navigator.clipboard.writeText(textarea.value).then(() => {
+                        const origText = btnCopy.textContent;
+                        btnCopy.textContent = '✅ コピー完了';
+                        setTimeout(() => btnCopy.textContent = origText, 1500);
+                    });
+                });
+
+                // ダウンロードボタン
+                btnDownload.addEventListener('click', () => {
+                    const blob = new Blob([textarea.value], { type: 'text/vtt;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = song.file.replace(/^.*[\\/]/, '').replace(/\.[^/.]+$/, "") + '.vtt';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
             });
 
-            // VTTパーサー関数（空行や複数行テキストに対応できるよう強化）
+            // VTTテキスト解析パーサー
             function parseVTT(vttText) {
                 const lines = vttText.split(/\r?\n/);
                 const cues = [];
@@ -530,15 +838,19 @@
                     if (line.includes('-->')) {
                         if (currentCue) cues.push(currentCue);
                         const times = line.split('-->');
+                        const start = parseTimeToSeconds(times[0].trim());
+                        const end = parseTimeToSeconds(times[1].trim());
+                        const origDur = end - start;
                         currentCue = {
-                            start: parseTimeToSeconds(times[0].trim()),
-                            end: parseTimeToSeconds(times[1].trim()),
+                            start: start,
+                            end: end,
+                            minDuration: origDur < 1.0 ? origDur : 1.0,
                             text: ''
                         };
                     } else if (line === '' && currentCue) {
                         cues.push(currentCue);
                         currentCue = null;
-                    } else if (currentCue && !line.startsWith('WEBVTT')) {
+                    } else if (currentCue && !line.startsWith('WEBVTT') && !line.match(/^\d+$/)) {
                         currentCue.text += (currentCue.text ? '\n' : '') + line;
                     }
                 });
@@ -546,7 +858,34 @@
                 return cues;
             }
 
-            // 時間表記 (00:01:20.500 または 01:20.500) を秒数に変換する関数
+            // cues 配列から WEBVTT テキスト文字列を生成
+            function generateVTT(cues) {
+                let text = "WEBVTT\n\n";
+                cues.forEach(cue => {
+                    text += `${formatTime(cue.start)} --> ${formatTime(cue.end)}\n`;
+                    text += `${cue.text}\n\n`;
+                });
+                return text.trim() + "\n";
+            }
+
+            // 秒数を 00:00.000 形式に変換
+            function formatTime(sec) {
+                if (isNaN(sec) || sec < 0) sec = 0;
+                const hrs = Math.floor(sec / 3600);
+                const mins = Math.floor((sec % 3600) / 60);
+                const secs = sec % 60;
+                const s = Math.floor(secs);
+                const ms = Math.floor((secs - s) * 1000);
+
+                const pad = (num, size = 2) => String(num).padStart(size, '0');
+                if (hrs > 0) {
+                    return `${pad(hrs)}:${pad(mins)}:${pad(s)}.${pad(ms, 3)}`;
+                } else {
+                    return `${pad(mins)}:${pad(s)}.${pad(ms, 3)}`;
+                }
+            }
+
+            // 時間文字列を秒数に変換
             function parseTimeToSeconds(timeStr) {
                 if (!timeStr) return 0;
                 const parts = timeStr.split(':');
@@ -565,18 +904,15 @@
 
         // タブ切り替え処理
         function switchTrack(index, event) {
-            // パネル切り替え
             const panels = document.querySelectorAll('.track-panel');
             panels.forEach(p => p.classList.remove('active'));
             const targetPanel = document.getElementById(`track-${index}`);
             if (targetPanel) targetPanel.classList.add('active');
 
-            // ボタン表示切り替え
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(b => b.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            // 再生中の音声を停止
             const mediaElements = document.querySelectorAll('audio, video');
             mediaElements.forEach(media => media.pause());
         }
