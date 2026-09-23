@@ -175,6 +175,7 @@
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             border: 1px solid var(--border-color);
+            display: none; /* 初期状態は非表示 */
         }
 
         .player-editor-wrapper {
@@ -186,6 +187,7 @@
         .player-editor-wrapper.edit-mode {
             flex-direction: row;
             align-items: stretch;
+            flex-wrap: wrap;
         }
 
         .player-editor-wrapper.edit-mode .video-wrapper {
@@ -395,6 +397,41 @@
             color: #ffffff;
             font-size: 1.25rem;
         }
+
+        /* --- VTT編集モード専用の字幕文字サイズ設定 --- */
+        .subtitle-overlay.edit-mode-active .subtitle-line {
+            font-size: 0.9rem;  /* 通常行のサイズ */
+        }
+        .subtitle-overlay.edit-mode-active .subtitle-line.active {
+            font-size: 1.1rem;  /* アクティブ（現在）行のサイズ */
+        }
+        .subtitle-overlay.edit-mode-active .subtitle-line.nearby {
+            font-size: 0.95rem; /* 隣の行のサイズ */
+        }
+
+        /* --- 操作説明欄のスタイル --- */
+        .vtt-help-panel {
+            display: none;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .player-editor-wrapper.edit-mode .vtt-help-panel {
+            display: block; /* 編集モード時のみ表示させる */
+        }
+        .vtt-help-panel ul {
+            margin-top: 0.5rem;
+            margin-left: 1.5rem;
+        }
+        .vtt-help-panel li {
+            margin-bottom: 0.3rem;
+        }
     </style>
 </head>
 <body>
@@ -508,7 +545,7 @@
                          <label class="edit-toggle-label">
                            <input type="checkbox" id="edit-toggle-${index}"> 🛠️ VTT編集モード
                          </label>
-                         <span class="time-display" id="time-display-${index}">00:00.000</span>
+                         <span class="time-display" id="time-display-${index}">現在の再生時間 00:00.000</span>
                        </div>
                        <div class="player-editor-wrapper" id="player-editor-${index}">
                          <div class="video-wrapper">
@@ -523,6 +560,14 @@
                              <button type="button" class="editor-btn" id="btn-download-${index}">💾 VTTダウンロード</button>
                            </div>
                            <textarea id="vtt-text-${index}" class="vtt-textarea" spellcheck="false" placeholder="WEBVTT..."></textarea>
+                         </div>
+                         <div class="vtt-help-panel">
+                           【操作方法】
+                           <ul>
+                             <li>動画上の字幕をマウスで上下にスクロールさせることで字幕のタイミングを調整することができます。</li>
+                             <li>テキストエリアでタイムスタンプや歌詞を直接書き換えることも可能です。</li>
+                             <li>編集内容は保存されませんので、修正したVTTデータはダウンロードして別途アップロードしてください。</li>
+                           </ul>
                          </div>
                        </div>`
                     : `<audio controls src="${escapeHtml(song.file)}"></audio>`;
@@ -698,6 +743,7 @@
                             textarea.value = '';
                             editorWrapper.classList.remove('edit-mode');
                             overlay.classList.remove('edit-mode-active');
+                            timeDisplay.style.display = 'none';
 
                             loadServerVTT(() => {
                                 updateScrollForTime(video.currentTime);
@@ -706,6 +752,7 @@
                             // オンにする場合：サーバーから最新のVTTを読み込んで初期化
                             editorWrapper.classList.add('edit-mode');
                             overlay.classList.add('edit-mode-active', 'visible');
+                            timeDisplay.style.display = 'inline-block';
 
                             loadServerVTT((vttText) => {
                                 textarea.value = vttText;
@@ -720,7 +767,7 @@
                     const currentTime = video.currentTime;
 
                     if (timeDisplay) {
-                        timeDisplay.textContent = formatTime(currentTime);
+                        timeDisplay.textContent = '現在の再生時間 ' + formatTime(currentTime);
                     }
 
                     if (isDragging) return; // ドラッグ中は自動スクロール停止
