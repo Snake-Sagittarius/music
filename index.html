@@ -165,6 +165,18 @@
             height: 16px;
         }
 
+        /* 再生時間リアルタイム表示エリア */
+        .time-display {
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
         .player-editor-wrapper {
             display: flex;
             flex-direction: column;
@@ -231,7 +243,7 @@
             padding: 0.6rem;
             font-family: Consolas, Monaco, monospace;
             font-size: 0.85rem;
-            line-height: 1.4;
+            line-height: 20px; /* 自動スクロール位置計算用に固定 */
             resize: vertical;
             white-space: pre;
             outline: none;
@@ -338,9 +350,10 @@
             opacity: 1;
         }
 
-        /* 編集モード時のオーバーレイのスタイル */
+        /* 編集モード時のオーバーレイ（下部20%を空けてプレイヤー操作を可能にする） */
         .subtitle-overlay.edit-mode-active {
             pointer-events: auto;
+            height: 80%; /* 修正: 下部20%を解放してコントロール操作を可能に */
             cursor: grab;
         }
 
@@ -495,6 +508,7 @@
                          <label class="edit-toggle-label">
                            <input type="checkbox" id="edit-toggle-${index}"> 🛠️ VTT編集モード
                          </label>
+                         <span class="time-display" id="time-display-${index}">00:00.000</span>
                        </div>
                        <div class="player-editor-wrapper" id="player-editor-${index}">
                          <div class="video-wrapper">
@@ -548,6 +562,7 @@
                 const editToggle = document.getElementById(`edit-toggle-${index}`);
                 const editorWrapper = document.getElementById(`player-editor-${index}`);
                 const textarea = document.getElementById(`vtt-text-${index}`);
+                const timeDisplay = document.getElementById(`time-display-${index}`);
                 const btnCopy = document.getElementById(`btn-copy-${index}`);
                 const btnDownload = document.getElementById(`btn-download-${index}`);
 
@@ -560,19 +575,29 @@
                 let initialTranslateY = 0;
                 let currentTranslateY = 0;
                 let lastTime = 0;
+                let activeIndex = -1;
 
-                // VTTファイルをfetchしてパース
-                fetch(vttFile)
-                    .then(res => res.text())
-                    .then(vttText => {
-                        textarea.value = vttText;
-                        cues = parseVTT(vttText);
-                        renderSubtitles();
-                    })
-                    .catch(err => {
-                        console.log('VTT字幕なし、または読み込み失敗:', err);
-                        textarea.value = "WEBVTT\n\n";
-                    });
+                // サーバーからVTTファイルをロードする関数
+                function loadServerVTT(callback) {
+                    fetch(vttFile)
+                        .then(res => res.text())
+                        .then(vttText => {
+                            cues = parseVTT(vttText);
+                            renderSubtitles();
+                            if (callback) callback(vttText);
+                        })
+                        .catch(err => {
+                            console.log('VTT字幕なし、または読み込み失敗:', err);
+                            cues = [];
+                            renderSubtitles();
+                            if (callback) callback("WEBVTT\n\n");
+                        });
+                }
+
+                // 初期読み込み
+                loadServerVTT((vttText) => {
+                    if (textarea) textarea.value = vttText;
+                });
 
                 // 字幕行エレメントの再生成
                 function renderSubtitles() {
@@ -582,7 +607,8 @@
                 }
 
                 // スクロール位置とハイライト更新
-                function updateScroll(activeIndex, targetTranslateY = null) {
+                function updateScroll(idx, targetTranslateY = null) {
+                    activeIndex = idx;
                     const lines = scrollContainer.querySelectorAll('.subtitle-line');
                     lines.forEach((line, i) => {
                         line.classList.remove('active', 'nearby');
@@ -602,6 +628,11 @@
                             scrollContainer.style.transform = `translateY(${translateY}px)`;
                         }
                     }
+
+                    // VTT編集モード時、<textarea> の自動スクロール処理
+                    if (editToggle && editToggle.checked && activeIndex !== -1 && document.activeElement !== textarea) {
+                        scrollToTextareaCue(activeIndex);
+                    }
                 }
 
                 // 時間に基づくハイライトスクロール
@@ -619,34 +650,81 @@
                         }
                     }
 
-                    let activeIndex = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
-                    if (activeIndex === -1) {
-                        activeIndex = cues.findLastIndex(c => currentTime >= c.start);
+                    let idx = cues.findIndex(c => currentTime >= c.start && currentTime <= c.end);
+                    if (idx === -1) {
+                        idx = cues.findLastIndex(c => currentTime >= c.start);
                     }
-                    if (activeIndex !== -1) {
-                        updateScroll(activeIndex);
+                    if (idx !== -1) {
+                        updateScroll(idx);
                     }
                 }
 
-                // 編集モードON/OFF切り替え
+                // <textarea> 内のアクティブCueへスクロールさせる処理
+                function scrollToTextareaCue(cueIndex) {
+                    const text = textarea.value;
+                    const lines = text.split('\n');
+                    let currentCueCount = -1;
+                    let targetLineIndex = -1;
+
+                    for (let i = 0; i < lines.length; i++) {
+                        if (lines[i].includes('-->')) {
+                            currentCueCount++;
+                            if (currentCueCount === cueIndex) {
+                                targetLineIndex = i;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (targetLineIndex !== -1) {
+                        const lineHeight = 20; // CSSで固定した line-height: 20px
+                        const targetScrollTop = (targetLineIndex * lineHeight) - (textarea.clientHeight / 2) + lineHeight;
+                        textarea.scrollTop = Math.max(0, targetScrollTop);
+                    }
+                }
+
+                // 編集モードON/OFF切り替え（確認ダイアログと状態リセット付き）
                 if (editToggle) {
-                    editToggle.addEventListener('change', () => {
-                        if (editToggle.checked) {
-                            editorWrapper.classList.add('edit-mode');
-                            overlay.classList.add('edit-mode-active', 'visible');
-                        } else {
+                    editToggle.addEventListener('click', (e) => {
+                        if (!editToggle.checked) {
+                            // オフにしようとした場合、確認ダイアログを表示
+                            const confirmDiscard = confirm("VTT編集モードを終了しますか？\n編集中の内容は保存されません。必要に応じて「VTTダウンロード」で保存してください。");
+                            if (!confirmDiscard) {
+                                e.preventDefault(); // チェック解除をキャンセル
+                                return;
+                            }
+
+                            // OKの場合：textareaを消去し、サーバー上のVTTを再読み込みしてリセット
+                            textarea.value = '';
                             editorWrapper.classList.remove('edit-mode');
                             overlay.classList.remove('edit-mode-active');
-                            updateScrollForTime(video.currentTime);
+
+                            loadServerVTT(() => {
+                                updateScrollForTime(video.currentTime);
+                            });
+                        } else {
+                            // オンにする場合：サーバーから最新のVTTを読み込んで初期化
+                            editorWrapper.classList.add('edit-mode');
+                            overlay.classList.add('edit-mode-active', 'visible');
+
+                            loadServerVTT((vttText) => {
+                                textarea.value = vttText;
+                                updateScrollForTime(video.currentTime);
+                            });
                         }
                     });
                 }
 
-                // 再生時間の監視
+                // 再生時間の監視とリアルタイムタイム表示の更新
                 video.addEventListener('timeupdate', () => {
+                    const currentTime = video.currentTime;
+
+                    if (timeDisplay) {
+                        timeDisplay.textContent = formatTime(currentTime);
+                    }
+
                     if (isDragging) return; // ドラッグ中は自動スクロール停止
 
-                    const currentTime = video.currentTime;
                     if (Math.abs(currentTime - lastTime) > 1.0) {
                         scrollContainer.style.transition = 'none';
                     } else {
@@ -675,14 +753,9 @@
                 overlay.addEventListener('pointerdown', (e) => {
                     if (!editToggle || !editToggle.checked) return;
 
-                    // 動画下部20%領域はプレイヤー操作用として無視
-                    const rect = overlay.getBoundingClientRect();
-                    if (e.clientY - rect.top > rect.height * 0.8) return;
-
                     isDragging = true;
                     dragStartY = e.clientY;
-                    
-                    // 現在の transform から translateY を取得
+
                     const style = window.getComputedStyle(scrollContainer);
                     const matrix = new WebKitCSSMatrix(style.transform);
                     initialTranslateY = matrix.m42;
@@ -697,10 +770,9 @@
 
                     const deltaY = e.clientY - dragStartY;
                     currentTranslateY = initialTranslateY + deltaY;
-                    
-                    // 画面中央に一番近い行（アクティブ行）を算出
+
                     const lines = scrollContainer.querySelectorAll('.subtitle-line');
-                    let activeIndex = -1;
+                    let newActiveIndex = -1;
                     let minDiff = Infinity;
 
                     lines.forEach((line, i) => {
@@ -708,33 +780,33 @@
                         const diff = Math.abs(lineCenter - (-currentTranslateY));
                         if (diff < minDiff) {
                             minDiff = diff;
-                            activeIndex = i;
+                            newActiveIndex = i;
                         }
                     });
 
-                    updateScroll(activeIndex, currentTranslateY);
+                    updateScroll(newActiveIndex, currentTranslateY);
 
                     // タイムスタンプ調整ロジック（玉突き含む）
-                    if (activeIndex !== -1 && cues[activeIndex]) {
+                    if (newActiveIndex !== -1 && cues[newActiveIndex]) {
                         const now = video.currentTime;
-                        const cue = cues[activeIndex];
+                        const cue = cues[newActiveIndex];
                         let changed = false;
 
                         if (now < cue.start) {
                             cue.start = now;
                             if (cue.start >= cue.end - cue.minDuration) {
                                 cue.end = cue.start + cue.minDuration;
-                                adjustNext(activeIndex);
+                                adjustNext(newActiveIndex);
                             }
-                            adjustPrevious(activeIndex);
+                            adjustPrevious(newActiveIndex);
                             changed = true;
                         } else if (now > cue.end) {
                             cue.end = now;
                             if (cue.end <= cue.start + cue.minDuration) {
                                 cue.start = Math.max(0, cue.end - cue.minDuration);
-                                adjustPrevious(activeIndex);
+                                adjustPrevious(newActiveIndex);
                             }
-                            adjustNext(activeIndex);
+                            adjustNext(newActiveIndex);
                             changed = true;
                         }
 
