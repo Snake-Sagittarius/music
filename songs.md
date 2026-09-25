@@ -678,7 +678,7 @@ Is he a ghost? Or did we just forget to render him?
 I'm casting spells by clicking icons on the taskbar,
 I think I crashed the moon, it fell down like a shooting star.
 My "seal of death" is really just a deleted script,
-The matrix shutters as the physics code has finally flipped!
+The matrix shudders as the physics code has finally flipped!
 
 [Chorus]
 
