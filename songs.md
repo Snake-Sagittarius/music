@@ -163,7 +163,7 @@ You should do what you want and conquer every single fear
 
 [Outro]
 (Gotta give it a try! Gotta give it a try!)
-I'm gotta go, I'm finding that I'm finally free!
+I'm gonna go, I'm finding that I'm finally free!
 Yeah! This is my life now!(Go!)
 
 ## Japanese
@@ -649,3 +649,80 @@ This dark connection cannot know defeat.
 弱者が忌避する新しい世界を作り上げる。
 私のマルウェアによる意図は、最終的かつ完全なものだ。
 この暗黒の接続は、敗北を知ることがない。
+
+---
+
+# Gravity Is A Suggestion
+- File: Gravity_Is_A_Suggestion.mp4
+
+## English
+[Verse 1]
+I strike a pose, my cape is clipping through the floor,
+Unlocking secrets hidden behind the golden door.
+My "sword of void" is just a broken texture file,
+I hack the mainframe with a dark and edgy smile.
+Don't fear the lag, it's just my power rising high,
+I'm typing gibberish until the server starts to cry.
+
+[Chorus]
+We're on a quest to save the stars, a grand design,
+But every step I take, I cross a boundary line!
+Accidental heroes, we're tearing down the screen,
+The coolest glitches that the system's ever seen!
+Oh, watch me glow! I think I broke the gravity,
+A hero's journey fueled by pure insanity!
+
+[Verse 2]
+The shadow demon's here, but nobody can see him,
+Is he a ghost? Or did we just forget to render him?
+I'm casting spells by clicking icons on the taskbar,
+I think I crashed the moon, it fell down like a shooting star.
+My "seal of death" is really just a deleted script,
+The matrix shutters as the physics code has finally flipped!
+
+[Chorus]
+
+[Outro]
+"The seals are breaking... The ancient fire awakens..."
+"Witness my ultimate move! Hyper-Death-Drive-Slash!"
+Oops, did I do that? The sky is turning blue.
+Everything's deleting, guess the dream is coming true!
+So epic! So dark! So completely unforeseen!
+The end of the world is just a broken, glitched-out scene!
+Yeah!
+
+## Japanese
+[Verse 1]
+ポーズを決める、俺のマントが床をすり抜けている。
+黄金の扉の向こうに隠された秘密を解き明かす。
+俺の「虚無の剣」は、ただの壊れたテクスチャファイルだ。
+闇めいた尖った笑みを浮かべながら、メインフレームをハッキングする。
+ラグを恐れるな、これはただ俺の力が高まっているだけだ。
+サーバーが泣き出すまで、意味不明な文字を打ち込み続ける。
+
+[Chorus]
+俺たちは星々を救う壮大な使命の旅に出ている。
+だが、俺が一歩進むたびに、境界線を越えてしまう！
+偶然生まれた英雄たち、俺たちはスクリーンをぶち壊していく。
+システムがこれまで見た中で、最高にクールなバグたちだ！
+見ろ、俺が輝いている！　どうやら重力を壊してしまったらしい。
+純粋な狂気を燃料にした、英雄の旅だ！
+
+[Verse 2]
+影の悪魔がここにいるのに、誰にも見えない。
+幽霊なのか？　それとも、ただ描画するのを忘れただけなのか？
+タスクバーのアイコンをクリックして、魔法を発動している。
+どうやら月をクラッシュさせてしまったようだ、流れ星のように落ちていった。
+俺の「死の封印」は、実際にはただ削除されたスクリプトだ。
+物理演算コードがついに反転し、マトリックスが震える！
+
+[Chorus]
+
+[Outro]
+「封印が破られていく……古代の炎が目覚める……」
+「我が究極奥義を見届けろ！　ハイパー・デス・ドライブ・スラッシュ！」
+おっと、俺がやっちゃったのか？　空が青くなっている。
+すべてが消去されていく。どうやら夢が現実になっているらしい！
+なんて壮大なんだ！　なんて暗黒なんだ！　こんな展開、完全に予想外だ！
+世界の終焉なんて、ただ壊れてバグだらけになった一場面にすぎない！
+イェーッ！
