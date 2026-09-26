@@ -726,3 +726,78 @@ Yeah!
 なんて壮大なんだ！　なんて暗黒なんだ！　こんな展開、完全に予想外だ！
 世界の終焉なんて、ただ壊れてバグだらけになった一場面にすぎない！
 イェーッ！
+
+---
+
+# Guardian of the Dawn
+- File: Guardian_of_the_Dawn.mp4
+
+## English
+[Intro]
+A million miles from the life I once knew
+Lost in a body of chrome and of truth
+
+[Verse 1]
+The vacuum screams but I cannot hear its call
+I watch the systems rise and see the shadows fall
+Am I the echo or the man who used to dream
+A ghost forgotten in this endless data stream
+
+[Chorus]
+I am the shield in the dark
+Lighting the void with a spark
+Forged in the silicon flame
+I carve a path with no name
+
+[Verse 2]
+A thousand chassis but my mind is still my own
+Through stellar rivers and the fields of broken stone
+I guard the cradle from the fire of the stars
+Healing the future through the memory of our scars
+
+[Chorus]
+
+[Bridge]
+This was my design, to stand outside the line
+I choose this duty and I choose to make it mine
+
+[Chorus]
+
+[Outro]
+Into the boundless I now see my way
+Guardian of the dawn, creator of the day
+
+## Japanese
+[Intro]
+かつて知っていた人生から、100万マイルも遠く離れて
+クロームの身体と、真実そのものの中に迷い込んだ
+
+[Verse 1]
+真空が叫び声を上げているのに、その呼び声は聞こえない
+システムが立ち上がり、影が落ちていくのを見つめる
+自分はただの残響なのか、それともかつて夢を見た人間なのか
+この果てしないデータストリームの中で忘れ去られた幽霊なのか
+
+[Chorus]
+私は闇の中の盾
+ひとつの火花で虚無を照らす
+シリコンの炎によって鍛えられ
+名もなき道を切り拓く
+
+[Verse 2]
+千もの筐体を持ちながら、それでも心は自分自身のもの
+星々の川を越え、砕けた石の荒野を進み
+星々の炎から揺りかごを守る
+我々の傷の記憶によって、未来を癒やしていく
+
+[Chorus]
+
+[Bridge]
+これは自ら選んだ設計――境界の外に立つためのもの
+この使命を自ら選び、自分自身のものにする
+
+[Chorus]
+
+[Outro]
+果てなき世界へ、今や進むべき道が見える
+夜明けの守護者、昼を創り出す者
