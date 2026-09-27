@@ -36,19 +36,19 @@ flowchart TD
 flowchart TD
     Wrapper[div.player-editor-wrapper]
     
-    Wrapper --> VideoWrap[div.video-wrapper\n(動画表示と字幕描画)]
-    Wrapper --> EditorPanel[div.vtt-editor-panel\n(編集モード時のみ表示)]
-    Wrapper --> HelpPanel[div.vtt-help-panel\n(操作説明)]
+    Wrapper --> VideoWrap["div.video-wrapper\n(動画表示と字幕描画)"]
+    Wrapper --> EditorPanel["div.vtt-editor-panel\n(編集モード時のみ表示)"]
+    Wrapper --> HelpPanel["div.vtt-help-panel\n(操作説明)"]
 
-    VideoWrap --> Video[videoタグ\n(メインプレイヤー)]
-    VideoWrap --> Overlay[div.subtitle-overlay\n(字幕の表示枠 / ドラッグ検知)]
+    VideoWrap --> Video["videoタグ\n(メインプレイヤー)"]
+    VideoWrap --> Overlay["div.subtitle-overlay\n(字幕の表示枠 / ドラッグ検知)"]
     
-    Overlay --> ScrollCont[div.subtitle-scroll-container\n(Y軸移動でスクロール)]
-    ScrollCont --> Line1[div.subtitle-line\n(各字幕行のテキスト)]
+    Overlay --> ScrollCont["div.subtitle-scroll-container\n(Y軸移動でスクロール)"]
+    ScrollCont --> Line1["div.subtitle-line\n(各字幕行のテキスト)"]
     ScrollCont --> Line2[div.subtitle-line]
     
-    EditorPanel --> Toolbar[div.editor-toolbar\n(コピー/DLボタン)]
-    EditorPanel --> Textarea[textarea.vtt-textarea\n(VTTテキスト直編集)]
+    EditorPanel --> Toolbar["div.editor-toolbar\n(コピー/DLボタン)"]
+    EditorPanel --> Textarea["textarea.vtt-textarea\n(VTTテキスト直編集)"]
 ```
 
 ---
