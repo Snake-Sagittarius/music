@@ -1,123 +1,111 @@
-# The Art of Conversation
-- File: The_Art_of_Conversation.mp4
+# The Latency Gone
+- File: The_Latency_Gone.mp4
 
 ## English
-[Intro]
-Yeah, class is in session, let's go.
-Time to get the grammar right, you know.
-(Unit One, let's learn.)
-
 [Verse 1]
-How are you? I ask with a smile.
-It's been quite a long and beautiful while.
-I just got a brand new job on the street.
-And there are so many people I want to meet.
-You ready? I see the light in your eyes.
-No need to overthink or over-analyze.
-Yes, thank you, that's what we usually say.
-Keeping it short and bright throughout the day.
-
-[Pre-Chorus]
-We say 'I've lost my keys' when we can't find them now.
-But 'I lost them yesterday' tells us exactly when and how.
-It has been raining all week, and the puddles still remain.
-But it rained last night means there is no more rain.
+Midnight glow staring straight at the grid
+Trapped in the logic and what the ghost did
+The cycle hangs heavy and the memory bleeds
+Chasing a bottleneck that never recedes
+I am pushing the boundaries to find the mistake
+How many cycles is this gonna take
+The draft is a mess and the flow is all blind
+A phantom sequence locked inside my mind
+Wait for the jump but it stalls in the mud
+Silicon freezing and locking my blood
+I'll tear it apart and I'll rebuild the base
+No more excuses and no wasted space
 
 [Chorus]
-Do you have these? Yes we do.
-Those are brand new just for you.
-What are those? I need to know.
-Where is the place that we should go?
-We say three for ten to get a deal.
-That is just the way we really feel.
-Do you have these? Yes we do.
-Always learning something fresh and new.
+Oh counting up the primes and my heartbeat is raising
+This beautiful logic is finally amazing
+The latency gone and the clock is spinning fast
+I'm breaking through the barrier leaving shadows in the past
+Extract the hidden bit and let the sequence fly
+This computational high is reaching for the sky
+Everything aligned and the output is true
+Prime number hunting is a world I am passing through
 
 [Verse 2]
-I went to work and I ate some good food.
-I came home early in a wonderful mood.
-How has your week been going so far my friend?
-It's been going great from the start to the end.
-I've been working hard every single day.
-And I am tired but I will find a way.
-I like to ski when the winter time is near.
-It's my favorite sport to watch and cheer.
-
-[Bridge]
-I might have the flu, I think I need to stay home.
-You can't go return it when you are all alone.
-Oh my gosh, look at the sky so blue and bright.
-Everything is going to be alright tonight.
-I will help you and we're going to succeed.
-This is the knowledge that you really need.
-Yeah, we're going to make it work out fine.
+Tighten the array map it out in the mask
+Rounding off the edge to complete the whole task
+Staring at the logic gates waiting for the turn
+Cutting out the fat making all the data burn
+Is it faster yet? No, it's choking on the load
+I need a leaner path for this heavy-duty code
+Strip it down to binary and clean it to the bone
+Now I am turning corners in a digital zone
+Measuring the ticks as the time begins to shrink
+Watching milliseconds sliding right past the brink
+From sluggish to a blur of pure processing heat
+Optimization hums in the rhythm of the beat
+It is not just a list it is a living flowing chain
+Syncing up the frequency inside of my brain
+The struggle was the fuel that ignited the spark
+Now I am reading prime light in center of dark
 
 [Chorus]
 
 [Outro]
-(And that's Unit One, everybody.)
-(Good job today.)
+Optimization finished running like a dream
+Pure energy flowing in a high-speed stream
+The bottleneck broken and the ceiling is wide
+Nowhere left to hide
+Just the numbers and me
+Everything is free
 
 ## Japanese
-[Intro]
-さあ、レッスンが始まるよ。行こう。
-文法をしっかり身につける時間だよ。
-（ユニット1、さあ学ぼう。）
+[Verse 1]
+真夜中の光の中で、グリッドをまっすぐ見つめる
+その論理と、幽霊が残したものに囚われている
+繰り返される処理が重くのしかかり、メモリは血を流すように苦しむ
+決して消え去らないボトルネックを追い続ける
+ミスを見つけるために限界まで突き詰める
+あと何サイクルかかるんだ
+コードの下書きはめちゃくちゃで、処理の流れもまるで見えない
+頭の中には、幽霊のようなシーケンスが閉じ込められている
+ジャンプを待っているのに、泥の中でもがくように処理が止まる
+シリコンは凍りつき、血まで凍らせるようだ
+いったんすべてを壊して、土台から作り直す
+もう言い訳はしない。無駄な領域も残さない
 
-[Verse 1]【詐欺師が街にやってきた!】
-「元気？」と、私は笑顔で尋ねる。
-本当に久しぶりだね。
-この街で、新しい仕事を始めたばかりなんだ。（※怪しいビジネスの匂わせ）
-会いたい人も、たくさんいるしね。
-準備はいい？ 君の瞳が輝いているのが見えるよ。（※カモが食いついた）
-あれこれ深く考えすぎたり、分析しすぎたりしなくていい。（※契約書の提示）
-「はい、ありがとう」それがいつもの決まり文句。
-その日は、単純に明るい気持ちで過ごしながら。
+[Chorus]
+素数を数え上げる、そして心拍数が高まっていく
+この美しい論理が、ついに驚くほど素晴らしいものになった
+レイテンシは消え、クロックが高速で回っている
+壁を突き破り、過去の影を後ろに置き去りにする
+隠されたビットを取り出し、シーケンスを飛翔させる
+この計算処理の高揚感は、空へと届こうとしている
+すべてが噛み合い、出力は正しい
+素数を探し求める世界を、今まさに駆け抜けている
 
-[Pre-Chorus]【鍵が無くなり雨で盗難の形跡が消える】
-「鍵をなくした（I've lost my keys）」と言うのは、今もそれらが見当たらない場合。
-「昨日なくした（I lost them yesterday）」なら、いつ、どうやって、が具体的。（※手口はバレてない）
-「一週間ずっと雨が降っている」と言えば、まだ水たまりが残っている状態。
-でも、「昨夜雨が降った」と言えば、今はもう降っていない。（※印象操作）
-
-[Chorus]【怪しい店での取引】
-これらはありますか？ええ、ありますよ。
-そちらはあなたに相応しい新製品ですよ。（※高級品）
-あれは何ですか？知りたいな。（※不審物発見）
-僕たちが行くべき場所はどこだろう？（※警察？）
-お得な「3つで10(貨幣単位不明)」という売り方をしています。（※抱き合わせ商法）
-それが私たちの偽らざる気持ちなんです。（※自己弁護）
-これらはありますか？ええ、ありますよ。（※もう一度やり直し）
-いつも新鮮で新しいことを学んでいます。（※社会勉強）
-
-[Verse 2]【格差社会】
-【ホワイト社員】
-仕事に行って、美味しいごはんを食べたよ。
-素晴らしい気分で早く家に帰ってきたんだ。
-今週の調子はどうだい、友よ？
-【ブラック社員】
-最初から最後までずっと順調だよ。
-毎日ずっと一生懸命働いているんだ。
-疲れているけれど、何とか方法を見つけるさ。
-【ホワイト社員】
-冬が近づいたらスキーをするのが好きなんだ。
-【ブラック社員】
-観戦して応援するのにも大好きなスポーツだよ。
-
-[Bridge]【3馬鹿トリオ】
-A:インフルエンザかもしれない、家にいたほうがよさそうだ。
-B:たった一人じゃ、それを返しに(インフルを撒きに)行くことなんてできないよね。（※危険思想）
-C:なんてことだ、空はこんなに青くて明るい。（※話題逸らし）
-A:今夜はきっと、すべてうまくいくはずさ。（※どうでもいい、早く寝たい）
-B:僕が手伝うよ、僕らならきっとうまくいく。（※パンデミック期待）
-C:これこそが、君に本当に必要な知識なんだ。（※医学）
-AB:ああ、きっとうまくいくさ。（※聞いてない）
+[Verse 2]
+配列を引き締め、マスクの中にその構造を割り当てる
+端の部分を丸めて、タスク全体を完成させる
+論理ゲートを見つめ、次の出番を待っている
+余分なものを削ぎ落とし、データを猛烈な勢いで処理する
+もう速くなったか？――いや、まだ負荷に押し潰されている
+この重量級コードには、もっと無駄のない経路が必要だ
+二進数レベルまで削ぎ落とし、骨の髄まで無駄をなくす
+今やデジタル空間の中を、次々と方向転換して進んでいる
+時間が縮んでいく中で、クロックの刻みを測定する
+ミリ秒が限界の向こう側へ滑るように消えていくのを見ている
+のろのろした状態から、純粋な処理熱が生み出す高速の残像へ
+最適化がビートのリズムに合わせて唸っている
+これは単なるリストではない、生きて流れる一連の連鎖だ
+頭の中の周波数まで同期していく
+苦闘こそが、火花を灯す燃料だった
+今や暗闇の中心にある「素数の光」を読み取っている
 
 [Chorus]
 
 [Outro]
-（というわけで、皆さん、ユニット1は以上です。）
-（今日はお疲れ様でした。）
+最適化は完了し、夢のように動いている
+純粋なエネルギーが、高速の流れとなって駆け抜ける
+ボトルネックは打ち破られ、限界を示す天井も大きく広がった
+もう隠れる場所はどこにもない
+そこにあるのは、数字と自分だけ
+すべてが自由になった
 
 ---
 
